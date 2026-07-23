@@ -1,67 +1,18 @@
-class Person:
-    def __init__(self, name, age):
-        self.name= name
-        self.age=age
-
-    def display_info(self):
-        return (self.name, self.age)
-
-
-class Member(Person):
-    def __init__(self, member_id, borrowed_books):
-        self.member_id = member_id
-        self.borrowed_books = borrowed_books
-    
-    def borrow_book():
-        pass
-    def return_book():
-        pass
-    def display_info(): # (Override)
-        pass
-
-class Book:
-    def __init__(self, title, author, isbn, available):
-        self.title= title
-        self.author = author
-        self.isbn = isbn
-        self.available = available
-
-    def display_book():
-        pass
-    # Use encapsulation for available.
-    # Create
-    # Getter
-    # Setter
-
-
-class Library:
-    def __init__(self,books, members):
-        self.books = books
-        self.members = members
-
-    def add_book():
-        pass
-    def register_member():
-        pass
-    def borrow_book():
-        pass
-    def return_book():
-        pass
-    def show_books():
-        pass
-    def show_members():
-        pass
-    def search_book():
-        pass
+import sys
+from library import Library
+from book import Book
+from member import Member
 
 # Create an instance
-person1 = Person("Alice", 30)
+# member1 = Member("Alice", 30)
+member1 = Member("Alice",30,1,"Python Programming")
+print(member1.display_info())
 
 # Call the method
-name, age = person1.display_info()
-print(name)  # Output: Alice
-print(age) 
-def main():
+# name, age = person1.display_info()
+# print(name)  # Output: Alice
+# print(age) 
+def display_menu():
     print("\n===================================================")
     print("========== ➡️ LIBRARY MANAGEMENT SYSTEM ⬅️ ==========")
     print("===================================================\n")
@@ -73,27 +24,47 @@ def main():
     print("# 6. Show All Members")
     print("# 7. Search Book")
     print("# 8. Exit")
-    try:
-        choice= int(input("Enter An Option: "))
-        if choice==1:
-            add_expense()
-        elif choice==2:
-            view_expenses()
-        elif choice==3:
-            search_expense()
-        elif choice==4:
-            update_expense()
-        elif choice==5:
-            delete_expense()
-        elif choice==6:
-            expense_summary()
-        elif choice==7:
-            print("\n########## - The App ended by the choice of user ✅ - ##########\n")
-        else:
-            raise ValueError("Invalid Menu Option")
 
-    except Exception as error:
-        print(f"\n########## - ❌{error}❌ - ##########\n")
+def main():
+
+ 
+    libary = Library()
+    while True:
+        try:
+            display_menu()
+            choice= int(input("Enter An Option: "))
+            if choice==1:
+                title= input("Enter Title: ")
+                Author= input("Enter Author: ")
+                isbn = input("Enter ISBN: ")
+                libary.add_book(title, Author, isbn)
+            elif choice==2:
+                id = int(input("Enter user ID: "))
+                name = input("Enter User name: ").strip()
+                age = int(input("Enter User Age: "))
+                book_name= input("Enter Book Name: ").strip()
+                libary.register_member(id, name, age, book_name)
+                
+            elif choice==3:
+                searched_book= input("What book are you looking borrow 👀:")
+                libary.borrow_book(searched_book)
+            elif choice==4:
+                libary.return_book()
+            elif choice==5:
+                libary.show_books()
+            elif choice==6:
+                libary.show_members()
+            elif choice==7:
+                searched_book= input("What book are you searching 👀:")
+                libary.search_book(searched_book)
+            elif choice==8:
+                print("\n########## - The App ended by the choice of user ✅ - ##########\n")
+                sys.exit(0)
+            else:
+                raise ValueError("Invalid Menu Option")
+
+        except Exception as error:
+            print(f"\n########## - ❌{error}❌ - ##########\n")
 
 if __name__ == "__main__":
     main()
