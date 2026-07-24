@@ -49,7 +49,8 @@ def main():
                 searched_book= input("What book are you looking borrow 👀:")
                 libary.borrow_book(searched_book)
             elif choice==4:
-                libary.return_book()
+                searched_book= input("What book are you looking borrow 👀:")
+                libary.return_book(searched_book)
             elif choice==5:
                 libary.show_books()
             elif choice==6:
@@ -64,7 +65,7 @@ def main():
                 raise ValueError("Invalid Menu Option")
 
         except Exception as error:
-            print(f"\n########## - ❌{error}❌ - ##########\n")
+            print(f"\n########## - 💥{error}💥 - ##########\n")
 
 if __name__ == "__main__":
     main()
