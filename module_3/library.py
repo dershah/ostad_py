@@ -17,7 +17,7 @@ class Library:
         print("Member 🙂 added successfully! ✅")
         print(self.members)
 
-    def borrow_book(self, searched_book):
+    def borrow_book(self, member_id, searched_book):
         book_exists = self.search_book(searched_book)
         print(f"book: {book_exists}")
 

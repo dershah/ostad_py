@@ -46,6 +46,8 @@ def main():
                 libary.register_member(id, name, age, book_name)
                 
             elif choice==3:
+                member_id= input("What book are you looking borrow 👀:")
+                libary.borrow_book(member_id)
                 searched_book= input("What book are you looking borrow 👀:")
                 libary.borrow_book(searched_book)
             elif choice==4:
