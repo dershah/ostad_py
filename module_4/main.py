@@ -2,6 +2,7 @@ import sys
 
 import requests
 import datetime
+import os
 import json
 
 last_data=None
@@ -22,7 +23,9 @@ def weather():
         wind_speed = f"{data['current_condition'][0]['windspeedKmph']} km/h"
         condition= f"{data['current_condition'][0]['weatherDesc'][0]['value']}"
 
-        print("------ Weather Report ------")
+        print("\n========================================")
+        print("======= ➡️ 🌪️ Weather Report ☀️ ⬅️ ======")
+        print("========================================\n")
         print(f"City: {city}")
         print(f"Temperature: {temperature}")
         print(f"Humidity: {humidity}")
@@ -40,9 +43,8 @@ def weather():
             "Fetched At": f"{current_time}"
         }
         globals()['last_data']=weather_report
-        print(globals()['last_data'])
     else:
-        print("Failed to retrieve data:", response.status_code)
+        print("💥Failed to retrieve data:", response.status_code)
 
 
 
@@ -59,7 +61,10 @@ def currency():
     if response.status_code == 200:
         data= response.json()
         rate = round(data['rates'][target_currency], 2)
-        print(f"1 {base_currency} = {rate:.2f} {target_currency}")
+        print("\n========================================")
+        print("======= ➡️ 🤑 Currency Report 💸 ⬅️ =======")
+        print("========================================\n")
+        print(f"1 {base_currency} = {rate} {target_currency}")
         print(f"Fetched At: {datetime.datetime.now()}")
         currency_report={
             "Type":"Currency",
@@ -69,25 +74,35 @@ def currency():
             "Fetched At": f"{current_time}"
         }
         globals()['last_data']=currency_report
-        print(globals()['last_data'])
     else:
-        print("Failed to retrieve data:", response.status_code) 
+        print("\n💥Failed to retrieve data:", response.status_code) 
 
 def save_json():
+    file_path= "./module_4/data.json"
     json_string = json.dumps(globals()['last_data'], indent=4)
-    with open("data.json", 'w') as file:
+    with open(file_path, 'w') as file:
         file.write(json_string)
+    print("\nLast data has been saved successfully ✅\n")
     
 
 def view_json():
     print("\n========================================")
-    print("========== ➡️ Last saved data ⬅️ ==========")
+    print("============ ➡️ Saved Data ⬅️ ============")
     print("========================================\n")
+    file_path= "./module_4/data.json"
+    if os.path.exists(file_path):
+        with open(file_path, "r") as file:
+            data = json.load(file)
+            if not data:
+                print("❌ File exists but JSON content is empty ❌")
+            else:
+                for key, value in data.items():
+                    print(key,": ", value)
+
+    else:
+        print("❌ File does not exist or is empty ❌")
     
-    with open("data.json", "r") as file:
-        data = json.load(file)
-        for key, value in data.items():
-            print(key,": ", value)
+    
 
 def display_menu():
     print("\n===================================================================")
