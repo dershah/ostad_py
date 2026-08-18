@@ -5,51 +5,83 @@ class Library:
         self.books = []      
         self.members = [] 
 
+# - - - - - - > ADD BOOK < - - - - - - #
     def add_book(self,title, author, isbn):
+        for book in self.books:
+            if book.isbn == isbn:
+                raise ValueError(f"💥 The Entered ISBN '{isbn}' has already been added to the System. 💥")
+        
         new_book = Book(title, author, isbn)
         self.books.append(new_book)
-        print("Book 📖 added successfully! ✅")
-        print(self.books)
+        print("Book 📖 added successfully! ✅")  
 
-    def register_member(self,member_id, name, age,  borrowed_books):
-        new_member = Member( name, age, member_id, borrowed_books)
+# - - - - - - > ADD MEMBER < - - - - - - #
+    def register_member(self, name, age):
+        new_member = Member( name, age)
         self.members.append(new_member)
         print("Member 🙂 added successfully! ✅")
-        print(self.members)
 
+# - - - - - - > BORROW BOOK < - - - - - - #
     def borrow_book(self, member_id, searched_book):
+        member_exists = self.search_member(member_id)
         book_exists = self.search_book(searched_book)
-        print(f"book: {book_exists}")
+        if book_exists.available == 'available':
+            member_exists.borrow_book(book_exists.title)
+            book_exists.available = 'borrowed'
+            print(f"📖 Book {book_exists.title} has been added to the member {member_exists.member_id} - {member_exists.name} successfully. ✅")
+        else: 
+            raise ValueError("book 📖 is currently not available.❌ \nPlease check again later.")
 
-        self.books.remove(book_exists)
-        print("book 📖 borrowed successfully. ✅")
+# - - - - - - > RETURN BOOK < - - - - - - #
+    def return_book(self, member_id, searched_book):
+        member_exists = self.search_member(member_id)
+        book_exists = self.search_book(searched_book)
 
-    def return_book(self, searched_book):
-        print("book 📖 returned.  ✅")
-
+        if searched_book in member_exists.borrowed_books and book_exists.available == 'borrowed':
+            member_exists.return_book(book_exists.title)
+            book_exists.available = 'available'
+            print(f"📖 Book '{book_exists.title}' has been removed from the member '{member_exists.member_id} - {member_exists.name}' successfully. ✅")
+            print("book 📖 returned.  ✅")
+        else: 
+            raise ValueError("The book 📖 has not borrowed yet by you.❌")
+        
+# - - - - - - > LIST ALL BOOKS < - - - - - - #
     def show_books(self):
         if not self.books:
-            print("No books 📖 in library. ❌")
+            raise ValueError("No books 📖 in library. ❌")
         else:
+            print("\n========== ➡️ BOOK LIST ⬅️ ==========\n")
             for book in self.books:
                 print(book.display_book())
-            
+
+# - - - - - - > LIST ALL MEMBERS < - - - - - - #  
     def show_members(self):
         if not self.members:
-            print("No Member 🙂 in library. ❌")
+            raise ValueError("No Member 🙂 in library. ❌")
         else:
+            print("\n========== ➡️ MEMBER LIST ⬅️ ==========\n")
             for member in self.members:
                 print(member.display_info()) 
 
-    def search_book(self, searched_book):
-        found= False      
+# - - - - - - > SEARCH BOOK < - - - - - - #
+    def search_book(self, searched_book):    
         if not self.books:
-            print("No books 📖 in library. ❌")
+            raise ValueError("No books 📖 in library. ❌")
         else:
             for book in self.books:
                 if(book.title == searched_book):
                     print(book.display_book())
-                    found= True
                     return book
-            if(not found):
-                print("No book with searched query found. 💥")
+        raise ValueError(" No book with searched query found. 💥")
+
+# - - - - - - > SEARCH MEMBER < - - - - - - #
+    def search_member(self, searched_member):
+        if not self.members:
+            raise ValueError("No Members 🙂 in library.❌ \nAdd members to the Library System.")
+        else:
+            for member in self.members:
+                if(member.member_id == searched_member):
+                    print(member.display_info())
+                    return member
+                    
+        raise ValueError("💥 No member with searched ID found. 💥")
