@@ -137,4 +137,4 @@ def main():
             print(f"\n########## - 💥{error}💥 - ##########\n")
 
 if __name__ == "__main__":
-    main()
+    main() 
