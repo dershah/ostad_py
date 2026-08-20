@@ -12,9 +12,16 @@
 h2{
     font-size: 150%;
     text-align: center;
-
+    color:#29400E;
 }
+b{
 
+    color:#29400E;
+}
+section{
+
+    border-bottom: 3px solid #fff;
+}
 #header{
     text-align: center;
     height: 120px;
@@ -79,11 +86,11 @@ img{
     border-radius: 4px;
     cursor: pointer; 
 }
-#section-about{
+#section-about, #section-contact{
     min-height: 100vh;
 }
-#section-about h2{
-    margin: 0% 20% 6% 20%;
+#section-about h2, #section-feature h2, #section-contact h2{
+    margin: 2% 20% 6% 20%;
     padding-bottom: 1%;
     border-bottom: 3px solid #29400E;
 
@@ -94,32 +101,45 @@ img{
 #section-about ul{
     padding: 1% 5%;
 }
+#section-feature, #section-price{
+    min-height: 50vh;
+}
 
-    #section-feature {
+.div-features{
+    display: flex; 
+    align-items: flex-start;
+    justify-content: space-around;
 
-    }
-    .div-features{
-        display: flex; 
-        gap: 20px; 
-        flex-direction: row;
-        align-items: flex-start;
-    }
+}
 
-    /* .column {
-        display: flex; 
-        flex-direction: column; 
-        flex: 1; 
-        gap: 10px; 
-    }
+.row {
+    text-align: center;
+    width: 150%;
+    margin: 2% 0%;
+    border: 1px solid #ccc;
+    color: #fff;
+    background-color: #29400E;
+    border-radius: 5px;
+} 
+.first{
+    color: #29400E;
+    background-color: #fff;
+    border: 2px solid #29400E;
+}
 
-    .row {
-        margin: 0;
-        padding: 10px;
-        background: #f0f0f0;
-        border: 1px solid #ccc;
-    }  */
+#section-price{
+    text-align: center;
+    padding: 8% 30% 0% 30%;
+}
 del{
     color:red;
+}
+span{
+    color: #7BA82A
+}
+#section-contact{
+    min-height: 80vh;
+    margin: 0% 25%;
 }
 form {
   border-radius: 5px;
@@ -127,7 +147,10 @@ form {
   padding: 20px;
 }
 
-label {display: block;}
+label {
+    display: block;
+    background-color: #f2f2f2;
+}
 
 input[type=text], select {
   width: 100%;
@@ -153,7 +176,7 @@ input[type=number], select {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-input[type=submit] {
+input[type=submit],  .btn-buy{
   width: 100%;
   background-color: #29400E;
   color: white;
@@ -166,4 +189,10 @@ input[type=submit] {
 
 input[type=submit]:hover {
   background-color: #7BA82A;
+}
+footer{
+    font-size: 20%;
+    margin: 2% 0%;
+    min-height: 5vh;
+    text-align: center;
 }
