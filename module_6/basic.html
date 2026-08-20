@@ -1,0 +1,157 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semantic HTML5 Page Example</title>
+    <style>
+        /* Basic styling for visualization */
+        body { font-family: sans-serif; margin: 0; padding: 0; line-height: 1.6; }
+        header, footer { background: #333; color: #fff; padding: 1rem; text-align: center; }
+        nav { background: #444; padding: 0.5rem; text-align: center; }
+        nav a { color: #fff; margin: 0 10px; text-decoration: none; }
+        main { padding: 20px; display: flex; gap: 20px; }
+        section { flex: 3; }
+        aside { flex: 1; background: #f4f4f4; padding: 15px; }
+        article { border: 1px solid #ddd; padding: 15px; margin-bottom: 20px; }
+        footer { margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>My Semantic Website</h1>
+        <p>A demonstration of HTML5 structure</p>
+    </header>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <main>
+        
+        <section id="content">
+            <h2>Latest Articles</h2>
+            
+            <article>
+                <h3>Understanding Semantic HTML</h3>
+                <p>Semantic elements clearly describe their meaning to both the browser and the developer.</p>
+                <footer>
+                    <p>Posted by <strong>Jane Doe</strong> on <time datetime="2026-08-18">August 18, 2026</time></p>
+                </footer>
+            </article>
+
+            <article>
+                <h3>The Importance of Accessibility</h3>
+                <p>Using correct tags helps screen readers navigate the web efficiently.</p>
+            </article>
+        </section>
+
+        <aside>
+            <h3>Related Links</h3>
+            <ul>
+                <li><a href="#">MDN Web Docs</a></li>
+                <li><a href="#">W3C Standards</a></li>
+            </ul>
+            <p><strong>Note:</strong> This sidebar content supports the main topic but stands apart.</p>
+        </aside>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Semantic Web Demo. All rights reserved.</p>
+        <address>Contact us at: <a href="mailto:info@example.com">info@example.com</a></address>
+    </footer>
+
+</body>
+</html>    -->
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flexbox Two Column Layout</title>
+  <style>
+    /* Container styles */
+    .row {
+      display: flex;
+      flex-wrap: wrap;       /* Allows stacking on small screens */
+      gap: 20px;             /* Space between columns */
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+
+    /* Column styles */
+    .col {
+      flex: 1 1 50%;         /* Grow, Shrink, Basis (50% width) */
+      background-color: white;
+      padding: 20px;
+      box-sizing: border-box;/* Includes padding in width calculation */
+      border: 1px solid #ddd;
+    }
+
+    /* Responsive: Stack columns on mobile */
+    @media (max-width: 600px) {
+      .col {
+        flex: 1 1 100%;      /* Full width on small screens */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="row">
+    <div class="col">
+      <h2>Column 1</h2>
+      <p>This is the first column. It takes up 50% of the space on large screens.</p>
+    </div>
+    
+    <div class="col">
+      <h2>Column 2</h2>
+      <p>This is the second column. It automatically wraps to the next line on mobile devices.</p>
+    </div>
+  </div>
+
+</body>
+</html>    -->
+
+<style>
+    #section-feature {
+        display: flex; /* Enables flexbox for the main container */
+        gap: 20px; /* Optional: adds space between the two columns */
+        /* align-items: flex-start; Aligns columns to the top */
+    }
+
+    .column {
+        display: flex; /* Enables flexbox for the columns */
+        flex-direction: column; /*Stacks children (p tags) vertically*/
+        flex: 1; /* Makes both columns take up equal width */
+        gap: 10px; /* Optional: adds space between rows inside the column */
+    }
+
+    .row {
+        margin: 0;
+        padding: 10px;
+        background: #f0f0f0;
+        border: 1px solid #ccc;
+    } 
+</style>
+
+<section id="section-feature">
+
+    
+    <div class="features column">
+        <p class="row">Beginner Friendly</p>
+        <p class="row">Practical Examples</p>
+        <p class="row">Digital PDF</p>
+    </div>
+    
+    <div class="description column">
+        <p class="row">Easy explanations</p>
+        <p class="row">Real coding examples</p>
+        <p class="row">Read on any device</p>
+    </div>
+</section>   
