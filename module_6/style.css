@@ -107,14 +107,16 @@ img{
 
 .div-features{
     display: flex; 
-    align-items: flex-start;
-    justify-content: space-around;
+    justify-content: space-evenly;
 
 }
-
+.features, .description {
+    flex: 1; 
+    min-width: 30%;
+    margin: 0% 5%;
+}
 .row {
     text-align: center;
-    width: 150%;
     margin: 2% 0%;
     border: 1px solid #ccc;
     color: #fff;
