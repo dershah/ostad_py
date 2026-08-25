@@ -13,7 +13,7 @@
                 <p>{{ project.description|truncatewords:20 }}</p>
                 <p><strong>Tech:</strong> {{ project.technology_used }}</p>
                 <a href="{{project.git_link}}"  target="_blank">GitHub Link</a>
-                <a href="#"  target="_blank">View Details</a>
+                <a href="{{project.project_id}}"  target="_blank">View Details</a>
             </div>
         {% empty %}
             <p>No projects available yet.</p>
