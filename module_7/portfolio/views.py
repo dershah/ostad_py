@@ -11,3 +11,5 @@ def all_projects(request):
     }
     
     return render(request, 'projects.html', context)
+def about_me(request):
+    return render(request, 'about.html')

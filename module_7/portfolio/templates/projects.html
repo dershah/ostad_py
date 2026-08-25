@@ -5,14 +5,15 @@
 </head>
 <body>
     <h1>My Projects</h1>
-    {% include 'header.html' %}   
-    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+    {% include 'nav.html' %}   
+    <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: space-evenly; margin: 20px 0px;">
         {% for project in projects %}
             <div style="border: 1px solid #ccc; padding: 15px; width: 300px;">
                 <h2>{{ project.title }}</h2>
                 <p>{{ project.description|truncatewords:20 }}</p>
                 <p><strong>Tech:</strong> {{ project.technology_used }}</p>
-                <a href="{{project.git_link}}"  target="_blank">View Details</a>
+                <a href="{{project.git_link}}"  target="_blank">GitHub Link</a>
+                <a href="#"  target="_blank">View Details</a>
             </div>
         {% empty %}
             <p>No projects available yet.</p>
