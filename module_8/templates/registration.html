@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+<!-- {% block title %}Home Page{% endblock %} -->
+
+{% block content %}
+    <section id="section-contact">
+        <h2>Reachout to us</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="submit" id="submit_btn" value="submit">
+            </form>
+            <br>
+            {% if messages %}
+                {% for message in messages %}
+                    <div style="color: green; font: bold;">
+                        {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </section>
+{% endblock content %}  
