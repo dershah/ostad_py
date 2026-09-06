@@ -1,13 +1,14 @@
+
 {% extends 'base.html' %}
 
 <!-- {% block title %}Home Page{% endblock %} -->
 
 {% block content %}
     <section id="section-contact">
-        <h2>Welcome</h2>
+        <h2>Reachout to us</h2>
             <form method="post">
                 {% csrf_token %}
-                {{form.as_p}}
+                {{report.as_p}}
                 <input type="submit" id="submit_btn" value="submit">
             </form>
             <br>
@@ -19,5 +20,7 @@
                 {% endfor %}
             {% endif %}
         </section>
+
+
+<a href="{% url 'logout' %}" style="width: 100px; background-color: black;color: #fff;">logout</a>
 {% endblock content %}  
-  

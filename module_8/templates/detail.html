@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+<!-- {% block title %}Home Page{% endblock %} -->
+
+{% block content %}
+    <section id="section-contact">
+        <h2>{{report.name}}</h2>
+            <br>
+        
+            <p>Name: {{report.name}}</p>
+            <p>Type: {{report.type}}</p>
+            <p>Category: {{report.category}}</p>
+            <p>description:{{report.description}}</p>
+            <p>location: {{report.location}}</p>
+            <p>User: {{report.user.first_name}} {{report.user.last_name}}</p>
+        </section>
+
+
+<a href="{% url 'logout' %}" style="width: 100px; background-color: black;color: #fff;">logout</a>
+{% endblock content %}  

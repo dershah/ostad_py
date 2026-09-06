@@ -81,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'lostandfounddb',
         'USER': 'postgres',
-        'PASSWORD': '@',
+        'PASSWORD': 'HelloThere21POSTGRESQL@',
         'HOST': 'localhost',
         'PORT': '5432'
     }
@@ -133,3 +133,5 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+AUTH_USER_MODEL = 'user.CustomUser'
