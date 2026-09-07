@@ -32,11 +32,23 @@ class ItemEntryForm(ModelForm):
             'placeholder':'Enter Contact Number',
             'class':'input_box'
         }))
-    status =forms.ChoiceField(choices=Item.ItemStatus.choices,
-            widget=forms.Select(
-            attrs={'class': 'input_box'
-        }))
+    # status =forms.ChoiceField(choices=Item.ItemStatus.choices,
+    #         widget=forms.Select(
+    #         attrs={'class': 'input_box'
+    #     }))
     
     class Meta:
         model = Item
-        fields = ['name', 'type', 'category', 'description', 'location']
+        fields = ['name', 'type', 'category', 'description', 'location', 'contact']
+
+
+
+class ItemStatusForm(ModelForm):
+    status = forms.ChoiceField(
+        choices=Item.ItemStatus.choices,
+        widget=forms.Select(attrs={'class': 'input_box'})
+    )
+
+    class Meta:
+        model = Item
+        fields = ['status']  

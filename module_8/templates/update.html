@@ -6,20 +6,29 @@
 {% block content %}
     <section id="section-contact">
         <h2>Reachout to us</h2>
-            <form method="post">
-                {% csrf_token %}
-                {{report.as_p}}
-                <input type="submit" id="submit_btn" value="submit">
-            </form>
-            <br>
-            {% if messages %}
-                {% for message in messages %}
-                    <div style="color: green; font: bold;">
-                        {{message}}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </section>
+        <div>
+            <p>Name: {{ report.name }}</p>
+            <p>Type: {{ report.get_type_display }}</p>
+            <p>Category: {{ report.category }}</p>
+            <p>Description: {{ report.description }}</p>
+            <p>Location: {{ report.location }}</p>
+            <p>Contact: {{ report.contact }}</p>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.status }}
+            <button type="submit">Update Status</button>
+        </form>   
+        <br>
+        {% if messages %}
+            {% for message in messages %}
+                <div style="color: green; font: bold;">
+                    {{message}}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </section>
 
 
 <a href="{% url 'logout' %}" style="width: 100px; background-color: black;color: #fff;">logout</a>

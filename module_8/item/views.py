@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Item
 from django.contrib import messages
-from .forms import ItemEntryForm
+from .forms import ItemEntryForm, ItemStatusForm
 
 
 
@@ -25,28 +25,30 @@ def item_create(request):
 
 def report_detail(request, pk):
     report = get_object_or_404(Item,pk=pk)   
-    print(report)
     return render(request, 'detail.html', {'report': report})
 
 
 def report_update(request, pk):
     report = get_object_or_404(Item, pk=pk)
     if request.method == 'POST':
-        report = ItemEntryForm(request.POST, instance=report)
-        if report.is_valid():
-            report.save()
-            return redirect(f'report_detail/{pk}')
+        form = ItemStatusForm(request.POST, instance=report)
+        if form.is_valid():
+            form.save()
+            return redirect('report_detail', pk=pk)
     else:
-        report = ItemEntryForm(instance=report)
-
-    return redirect('report_detail', pk=pk)   
-
+        form = ItemStatusForm(instance=report)
+    return render(request, 'update.html', {'form': form, 'report': report})     
 
 
-def report_delete():
-    # Delete the specific object
-    Item.delete()   
-    pass
+
+def report_delete(request, pk):
+    report = get_object_or_404(Item, pk=pk)
+    if report.user != request.user:
+        return redirect('dashboard')
+    if request.method == 'POST':
+        report.delete()
+        return redirect('dashboard')
+    return render(request, 'delete.html', {'report': report})
 
 def my_reports():
     pass

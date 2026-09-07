@@ -1,0 +1,25 @@
+
+{% extends 'base.html' %}
+
+<!-- {% block title %}Home Page{% endblock %} -->
+
+{% block content %}
+    <section id="section-contact">
+        <h2>Delete {{ report.name }}?</h2>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Confirm Delete</button>
+        </form>
+            <br>
+            {% if messages %}
+                {% for message in messages %}
+                    <div style="color: green; font: bold;">
+                        {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </section>
+
+
+<a href="{% url 'logout' %}" style="width: 100px; background-color: black;color: #fff;">logout</a>
+{% endblock content %}  
