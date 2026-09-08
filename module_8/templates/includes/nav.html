@@ -1,0 +1,7 @@
+    <nav id="navigation">
+        <a href="{% url 'dashboard' %}" class="nav">Home</a>
+        <a href="{% url 'report_create' %}" class="nav">Create</a>
+        <a href="{% url 'report_update' pk=pk %}" class="nav">Update</a>
+        <a href="{% url 'report_delete' pk=pk %}" class="nav">Delete</a>
+        <a href="{% url 'logout' %}" class="nav" style="width: 100px; background-color: black;color: #fff;">logout</a>
+    </nav>

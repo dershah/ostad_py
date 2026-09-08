@@ -50,5 +50,6 @@ def report_delete(request, pk):
         return redirect('dashboard')
     return render(request, 'delete.html', {'report': report})
 
-def my_reports():
-    pass
+def my_reports(request):
+    reports = Item.objects.filter(user=request.user)
+    return render(request, 'my_reports.html', {'reports': reports})

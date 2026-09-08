@@ -1,19 +1,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <section id="section-contact">
-        <h2>Reachout to us</h2>
 
+    <h2>List Of All The Items</h2>
+    <section id="section-item">
         {% if items %}
             {% for item in items %}
-                <p>{{item.name}}</p>
-                <p>{{item.type}}</p>
-                <p>{{item.category}}</p>
-                <p>{{item.description}}</p>
-                <p>{{item.location}}</p>
-                <p>{{item.user.first_name}} {{item.user.last_name}}</p>
-                <p></p>
-            {% endfor %}
+                <div>
+                <h2>{{item.name}}</h2>
+                
+                    <br>
+                    <p>User: {{item.user.first_name}} {{item.user.last_name}}</p>
+                    <p>item ID: {{item.id}}</p>
+                    <p>Name: {{item.name}}</p>
+                    <p>Type: {{item.type}}</p>
+                    <p>Category: {{item.category}}</p>
+                    <p>Description:{{item.description}}</p>
+                    <p>Location: {{item.location}}</p>
+                    <p>Contact: {{item.contact}}</p>
+                    <p>Status: {{item.status}}</p>
+                </div>
+        {% endfor %}
         {% endif %}
 
         <!-- <form method="post">
@@ -32,5 +39,4 @@
         {% endif %}
     </section>
 
-    <a href="{% url 'logout' %}" style="width: 100px; background-color: black; color: #fff;">logout</a>
 {% endblock content %}   
