@@ -4,6 +4,15 @@
 
 {% block content %}
     <section id="section-contact">
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div style="color: green; font: bold;">
+                        {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <br>
         <h2>Welcome</h2>
             <form method="post">
                 {% csrf_token %}

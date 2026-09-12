@@ -23,3 +23,6 @@ class Item(models.Model):
         on_delete=models.CASCADE,
         related_name='items'
     )   
+
+    def __str__(self):
+        return self.name

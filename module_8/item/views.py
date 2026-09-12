@@ -2,13 +2,19 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Item
 from django.contrib import messages
 from .forms import ItemEntryForm, ItemStatusForm
-
-
+from django.db.models import Q
 
 
 def list_reports(request):
     items = Item.objects.all()
-    return render(request, 'dashboard.html', {'items': items})
+    q = request.GET.get('q', '').strip()
+    if q:
+        items = items.filter(name__icontains=q)
+    return render(request, 'dashboard.html', {'items': items})   
+
+# def list_reports(request):
+#     items = Item.objects.all()
+#     return render(request, 'dashboard.html', {'items': items})
 
 def item_create(request):
     if request.method =='POST':
