@@ -7,7 +7,7 @@
     <section id="section-contact">
         <h2>Reachout to us</h2>
         <div>
-            <p>Name: {{ report.name }}</p>
+            <p>Name: {{ report.user.name }}</p>
             <p>Type: {{ report.get_type_display }}</p>
             <p>Category: {{ report.category }}</p>
             <p>Description: {{ report.description }}</p>
@@ -30,6 +30,4 @@
         {% endif %}
     </section>
 
-
-<a href="{% url 'logout' %}" style="width: 100px; background-color: black;color: #fff;">logout</a>
 {% endblock content %}  

@@ -35,7 +35,10 @@ def report_detail(request, pk):
 
 
 def report_update(request, pk):
-    report = get_object_or_404(Item, pk=pk)
+    report = get_object_or_404(Item, pk=pk)    
+    if report.user != request.user:
+        messages.error(request, 'You are not allowed to update/delete the Item/ Report.')
+        return redirect('dashboard')
     if request.method == 'POST':
         form = ItemStatusForm(request.POST, instance=report)
         if form.is_valid():
@@ -50,6 +53,7 @@ def report_update(request, pk):
 def report_delete(request, pk):
     report = get_object_or_404(Item, pk=pk)
     if report.user != request.user:
+        messages.error(request, 'You are not allowed to update/delete the Item/ Report.')
         return redirect('dashboard')
     if request.method == 'POST':
         report.delete()

@@ -14,6 +14,15 @@
     
     <!-- Main Content Block -->
     <main>
+        {% block message %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div style="color: red; font-weight: bold; text-align: center;margin: 10px 0px;">
+                        {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endblock message %}
         {% block content %}
         {% endblock %}
     </main>
