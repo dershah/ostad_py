@@ -23,3 +23,15 @@ def create_blog(request):
         form = BlogForm()
 
     return render(request, 'create_blog.html', {'form':form})
+
+def blog_detail(request):
+    pass
+
+def blog_update(request):
+    pass
+
+def blog_delete(request):
+    pass
+
+def my_blogs(request):
+    pass
