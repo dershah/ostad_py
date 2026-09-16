@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}  
+    <div class="" style="text-align:center; font-size: 150%; font-weight: bold; margin: 0 20px;">
+                Welcome back {{user}}
+    </div>
+        <br>
+
+    <h2>List Of All The Items</h2>  
+    <div class="searchbar">
+        <form method="get">
+            <input type="text" name="q" placeholder="Search.." value="{{ request.GET.q }}">
+            <button type="submit">Search</button>
+        </form>
+    </div> 
+    <section id="section-item">
+        {% if items %}
+            {% for item in items %}
+                <div>
+                <h2>{{item.name}}</h2>
+                
+                    <br>
+                    <p>User: {{item.user}}</p>
+                    <p>item ID: {{item.id}}</p>
+                    <p>Name: {{item.name}}</p>
+                    <p>Type: {{item.type}}</p>
+                    <p>Category: {{item.category}}</p>
+                    <p>Description:{{item.description}}</p>
+                    <p>Location: {{item.location}}</p>
+                    <p>Contact: {{item.contact}}</p>
+                    <p>Status: {{item.status}}</p>
+
+                    <a class="btn" href="{% url 'report_detail' item.id %}">see in details</a>
+                </div>
+        {% endfor %}
+        {% endif %}
+
+        <!-- <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="submit">
+        </form> -->
+
+    </section>
+            <!-- {% if messages %}
+            {% for message in messages %}
+                <div style="color: green; font-weight: bold;">
+                    {{message}}
+                </div>
+            {% endfor %}
+        {% endif %} -->
+
+{% endblock content %}   

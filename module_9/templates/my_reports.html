@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2>List Of All My Items</h2>
+    <section id="section-item">
+        {% for report in reports %}
+        <div>
+        <h2>{{report.name}}</h2>
+        
+            <br>
+            <p>User: {{report.user.first_name}} {{report.user.last_name}}</p>
+            <p>Report ID: {{report.id}}</p>
+            <p>Name: {{report.name}}</p>
+            <p>Type: {{report.type}}</p>
+            <p>Category: {{report.category}}</p>
+            <p>description:{{report.description}}</p>
+            <p>location: {{report.location}}</p>
+            <p>location: {{report.contact}}</p>
+            <p>location: {{report.status}}</p>
+        </div>
+        {% endfor %}
+        </section>
+
+{% endblock content %}  

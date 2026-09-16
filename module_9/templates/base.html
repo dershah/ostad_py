@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Django Site{% endblock %}</title>
+    {% load static %}
+    <!-- Common CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Include Header/Nav Partials -->
+    {% include 'includes/header.html' %}
+    
+    <!-- Main Content Block -->
+    <main>
+        {% block message %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div style="color: red; font-weight: bold; text-align: center;margin: 10px 0px;">
+                        {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endblock message %}
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Include Footer Partial -->
+    {% include 'includes/footer.html' %}
+
+    <!-- Common Scripts -->
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>   

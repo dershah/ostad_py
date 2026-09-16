@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+<!-- {% block title %}Home Page{% endblock %} -->
+
+{% block content %}
+    <section id="section-detail">
+        <h2>{{report.name}}</h2>
+            <br>
+            <p>User: {{report.user}}</p>
+            <p>Name: {{report.name}}</p>
+            <p>Type: {{report.type}}</p>
+            <p>Category: {{report.category}}</p>
+            <p>description:{{report.description}}</p>
+            <p>location: {{report.location}}</p>
+            <p>location: {{report.contact}}</p>
+            <p>location: {{report.status}}</p>
+        </section>
+        <div>
+            <a class="btn" href="{% url 'report_update' report.id %}">Update Report</a>
+            <a class="btn" href="{% url 'report_delete' report.id %}">Delete Report</a>
+        </div>
+
+{% endblock content %}  
