@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Blog
@@ -24,11 +24,23 @@ def create_blog(request):
 
     return render(request, 'create_blog.html', {'form':form})
 
-def blog_detail(request):
-    pass
+def blog_detail(request, pk):
+    blog =get_object_or_404(Blog, pk=pk)
+    return render(request, 'blog.html', {'blog': blog})
 
-def blog_update(request):
-    pass
+def blog_update(request,pk):
+    blog =get_object_or_404(Blog, pk=pk)
+    if blog.author != request.user:
+        messages.error(request, 'You are not allowed to update/ delete this post')
+        return redirect('homepage')
+    if request.method == 'POST':
+        form = BlogForm(request.POST, instance=blog)
+        if form.is_valid():
+            form.save()
+            return redirect ('blog',pk=pk)
+    else:
+        form = form = BlogForm(request.POST, instance=blog)
+    return render(request, 'update.html', {'form': form, 'blog': blog})
 
 def blog_delete(request):
     pass

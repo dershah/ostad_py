@@ -17,11 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from users import views as user_view
+from blog import views as blog_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', user_view.homepage_view, name='homepage'),
     path('sign-up/', user_view.signup_view, name='sign-up'),
     path('sign-in/', user_view.signin_view, name='sign-in'),
-    path('sign-out/', user_view.signout_view, name='sign-out')
+    path('sign-out/', user_view.signout_view, name='sign-out'),
+    path('blogs/', blog_view.allblogs_view, name='list-blog'),
+    path('create/', blog_view.create_blog, name='create-blog'),
+    path('blog/<int:pk>/', blog_view.blog_detail, name='blog'),
+    path('my-blogs/', blog_view.my_blogs, name='my-blogs'),
+    path('update/<int:pk>/', blog_view.blog_update, name='update-blog'),
+    path('delete/<int:pk>/', blog_view.blog_delete, name='delete-blog'),
 ]
