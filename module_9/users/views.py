@@ -38,9 +38,9 @@ def signin_view(request):
     return render(request, 'login.html', {'form':form})
 
 
-@login_required
-def homepage_view(request):
-    return render(request, 'homepage.html')
+# @login_required
+# def homepage_view(request):
+#     return render(request, 'homepage.html')
 
 def signout_view(request):
     logout(request)
