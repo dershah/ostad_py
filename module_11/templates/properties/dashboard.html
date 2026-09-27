@@ -1,0 +1,505 @@
+{% extends 'base.html' %}
+
+{% block title %}Explore Properties | Rentals{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ============================================================
+       PROPERTY DASHBOARD STYLES (Ultra-Premium White & Black Theme)
+       ============================================================ */
+
+    .dashboard-header {
+        max-width: 1280px;
+        margin: 0 auto 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    .hero-title-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .hero-title {
+        font-family: 'Outfit', sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        background: linear-gradient(135deg, #ffffff 60%, #888888);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+        font-size: 0.92rem;
+        color: var(--text-muted);
+        margin-top: 0.25rem;
+    }
+
+    /* Filter Toolbar */
+    .filter-card {
+        padding: 1.15rem 1.4rem;
+        background: var(--glass-bg);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8);
+    }
+
+    .filter-form {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.85rem;
+    }
+
+    .filter-group {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        background: rgba(18, 18, 18, 0.9);
+        border: 1px solid var(--border-color);
+        padding: 0.6rem 0.95rem;
+        border-radius: 12px;
+        color: var(--text-main);
+        font-size: 0.85rem;
+        flex: 1 1 180px;
+        transition: border-color 0.2s ease;
+    }
+
+    .filter-group:focus-within {
+        border-color: #ffffff;
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+    }
+
+    .filter-group i {
+        color: #ffffff;
+        font-size: 0.85rem;
+    }
+
+    .filter-select, .filter-input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: var(--text-main);
+        font-size: 0.85rem;
+        width: 100%;
+        font-family: inherit;
+    }
+
+    .filter-select option {
+        background: var(--bg-card);
+        color: var(--text-main);
+    }
+
+    .filter-btn-submit {
+        padding: 0.65rem 1.35rem;
+        background: #ffffff;
+        border: none;
+        border-radius: 12px;
+        color: #000000;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 800;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        box-shadow: 0 4px 15px rgba(255, 255, 255, 0.25);
+    }
+
+    .filter-btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
+        background: #f0f0f0;
+    }
+
+    .filter-btn-reset {
+        padding: 0.65rem 1rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
+    .filter-btn-reset:hover {
+        color: var(--text-main);
+        border-color: #ffffff;
+        background: rgba(255, 255, 255, 0.12);
+    }
+
+    /* Grid */
+    .property-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 1.75rem;
+        max-width: 1280px;
+        margin: 0 auto;
+        animation: gridRise 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes gridRise {
+        from { opacity: 0; transform: translateY(16px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Property Card */
+    .property-card {
+        display: flex;
+        flex-direction: column;
+        background: var(--glass-bg);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
+        transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+                    box-shadow 0.3s ease,
+                    border-color 0.3s ease;
+    }
+
+    .property-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(255, 255, 255, 0.45);
+        box-shadow: 0 24px 55px rgba(0, 0, 0, 0.95),
+                    0 0 15px rgba(255, 255, 255, 0.15);
+    }
+
+    /* Media Header */
+    .property-media {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        overflow: hidden;
+        background: rgba(18, 18, 18, 0.9);
+    }
+
+    .property-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .property-card:hover .property-media img {
+        transform: scale(1.06);
+    }
+
+    .property-media--empty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 2.8rem;
+    }
+
+    .property-badge {
+        position: absolute;
+        top: 0.85rem;
+        left: 0.85rem;
+        padding: 0.38rem 0.8rem;
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        color: #000000;
+        background: #ffffff;
+        border-radius: 99px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .property-status {
+        position: absolute;
+        top: 0.85rem;
+        right: 0.85rem;
+        padding: 0.38rem 0.8rem;
+        font-size: 0.7rem;
+        font-weight: 700;
+        border-radius: 99px;
+        backdrop-filter: blur(10px);
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+    .property-status--available {
+        background: rgba(16, 185, 129, 0.9);
+        color: #fff;
+    }
+
+    .property-status--unavailable {
+        background: rgba(239, 68, 68, 0.9);
+        color: #fff;
+    }
+
+    /* Body */
+    .property-body {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        padding: 1.25rem;
+        gap: 0.6rem;
+    }
+
+    .property-title {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        letter-spacing: -0.3px;
+        color: var(--text-main);
+        line-height: 1.35;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .property-location {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.84rem;
+        color: var(--text-muted);
+    }
+
+    .property-location i {
+        color: #ffffff;
+        font-size: 0.8rem;
+    }
+
+    .property-features {
+        display: flex;
+        align-items: center;
+        gap: 1.1rem;
+        margin-top: 0.2rem;
+        padding: 0.6rem 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.82rem;
+        color: var(--text-main);
+        font-weight: 600;
+    }
+
+    .feature-item i {
+        color: #ffffff;
+        font-size: 0.82rem;
+    }
+
+    .property-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: auto;
+        padding-top: 0.75rem;
+    }
+
+    .property-price-box {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .property-price-val {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.35rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: #ffffff;
+    }
+
+    .property-price-unit {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        font-weight: 500;
+    }
+
+    .property-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.6rem 1.1rem;
+        font-family: 'Outfit', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 800;
+        color: #000000;
+        text-decoration: none;
+        background: #ffffff;
+        border: 1px solid #ffffff;
+        border-radius: 12px;
+        transition: all 0.22s ease;
+    }
+
+    .property-cta:hover {
+        background: #e5e5e5;
+        box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+    }
+
+    .property-cta i {
+        font-size: 0.75rem;
+        transition: transform 0.2s ease;
+    }
+
+    .property-cta:hover i {
+        transform: translateX(3px);
+    }
+
+    /* Empty state */
+    .property-empty {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        padding: 5rem 2rem;
+        text-align: center;
+        background: var(--glass-bg);
+        backdrop-filter: blur(18px);
+        border: 1px dashed var(--border-color);
+        border-radius: 24px;
+        color: var(--text-muted);
+    }
+
+    .property-empty i {
+        font-size: 3rem;
+        color: #ffffff;
+        opacity: 0.7;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <div class="hero-title-section">
+        <div>
+            <h1 class="hero-title">Exclusive Property Listings</h1>
+            <p class="hero-subtitle">Discover premium apartments, luxury villas, and modern commercial spaces</p>
+        </div>
+    </div>
+
+    <!-- Filter Card -->
+    <div class="filter-card">
+        <form method="GET" action="{% url 'property_list' %}" class="filter-form">
+            {% if search_query %}
+            <input type="hidden" name="q" value="{{ search_query }}">
+            {% endif %}
+
+            <div class="filter-group">
+                <i class="fa-solid fa-house"></i>
+                <select name="property_type" class="filter-select">
+                    <option value="">All Property Types</option>
+                    {% for code, label in property_types %}
+                    <option value="{{ code }}" {% if selected_type == code %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <i class="fa-solid fa-euro-sign"></i>
+                <input type="number" name="min_price" value="{{ min_price }}" placeholder="Min Rent (€)" class="filter-input">
+            </div>
+
+            <div class="filter-group">
+                <i class="fa-solid fa-euro-sign"></i>
+                <input type="number" name="max_price" value="{{ max_price }}" placeholder="Max Rent (€)" class="filter-input">
+            </div>
+
+            <button type="submit" class="filter-btn-submit">
+                <i class="fa-solid fa-filter"></i> Filter
+            </button>
+
+            {% if selected_type or min_price or max_price or search_query %}
+            <a href="{% url 'property_list' %}" class="filter-btn-reset">
+                <i class="fa-solid fa-xmark"></i> Clear
+            </a>
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+<div class="property-grid">
+    {% for p in properties %}
+        <article class="property-card">
+            <!-- Media Container -->
+            <div class="property-media {% if not p.images.first %}property-media--empty{% endif %}">
+                {% if p.images.first %}
+                    <img src="{{ p.images.first.image.url }}" alt="{{ p.title }}" loading="lazy">
+                {% else %}
+                    <i class="fa-solid fa-building-user"></i>
+                {% endif %}
+
+                <span class="property-badge">
+                    {{ p.get_property_type_display|default:p.property_type }}
+                </span>
+
+                {% if p.availability_status %}
+                    <span class="property-status property-status--available">
+                        <i class="fa-solid fa-circle-check"></i> Available
+                    </span>
+                {% else %}
+                    <span class="property-status property-status--unavailable">
+                        <i class="fa-solid fa-circle-xmark"></i> Rented
+                    </span>
+                {% endif %}
+            </div>
+
+            <!-- Body Content -->
+            <div class="property-body">
+                <h3 class="property-title" title="{{ p.title }}">{{ p.title }}</h3>
+
+                <p class="property-location">
+                    <i class="fa-solid fa-location-dot"></i>
+                    {{ p.location }}
+                </p>
+
+                <div class="property-features">
+                    <div class="feature-item">
+                        <i class="fa-solid fa-bed"></i> {{ p.bedrooms }} Bed{% if p.bedrooms > 1 %}s{% endif %}
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-bath"></i> {{ p.bathroom }} Bath{% if p.bathroom > 1 %}s{% endif %}
+                    </div>
+                </div>
+
+                <div class="property-footer">
+                    <div class="property-price-box">
+                        <span class="property-price-val">€{{ p.monthly_rent|floatformat:"0g" }}</span>
+                        <span class="property-price-unit">/ month</span>
+                    </div>
+
+                    <a href="{% url 'property_detail' p.id %}" class="property-cta">
+                        Details <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </article>
+    {% empty %}
+        <div class="property-empty">
+            <i class="fa-solid fa-house-circle-xmark"></i>
+            <h3>No Properties Found</h3>
+            <p>Try adjusting your search criteria or filters to find available rental properties.</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock content %}

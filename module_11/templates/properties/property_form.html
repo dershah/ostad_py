@@ -1,0 +1,339 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} | Rentals{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ============================================================
+       PROPERTY FORM PAGE STYLES (Ultra-Premium White & Black Theme)
+       ============================================================ */
+
+    .form-container {
+        max-width: 780px;
+        margin: 0 auto;
+        padding: 2.25rem;
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: 28px;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95);
+        animation: formRise 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes formRise {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-header {
+        margin-bottom: 2rem;
+        padding-bottom: 1.25rem;
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .form-title {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: var(--text-main);
+        letter-spacing: -0.5px;
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+    }
+
+    .form-title i {
+        color: #ffffff;
+    }
+
+    .form-subtitle {
+        font-size: 0.88rem;
+        color: var(--text-muted);
+        margin-top: 0.35rem;
+    }
+
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: var(--text-main);
+        text-decoration: none;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-color);
+        border-radius: 99px;
+        transition: all 0.2s ease;
+    }
+
+    .back-btn:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: #ffffff;
+        color: #ffffff;
+    }
+
+    /* Form Fields Grid */
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+    }
+
+    .form-group--full {
+        grid-column: 1 / -1;
+    }
+
+    .field-label {
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
+    .field-label i {
+        color: #ffffff;
+    }
+
+    .form-input, .form-select, textarea.form-input {
+        width: 100%;
+        padding: 0.85rem 1.1rem;
+        background: rgba(18, 18, 18, 0.85);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        color: var(--text-main);
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+        outline: none;
+    }
+
+    .form-input:focus, .form-select:focus, textarea.form-input:focus {
+        border-color: #ffffff;
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.04);
+    }
+
+    .form-select option {
+        background: #111111;
+        color: #ffffff;
+    }
+
+    /* Custom Checkbox Container */
+    .checkbox-container {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.85rem 1.1rem;
+        background: rgba(18, 18, 18, 0.85);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        cursor: pointer;
+    }
+
+    .checkbox-container input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: #ffffff;
+        cursor: pointer;
+    }
+
+    .checkbox-label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-main);
+        cursor: pointer;
+    }
+
+    /* Submit Button Row */
+    .form-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 1.4rem;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .btn-submit {
+        padding: 0.9rem 2rem;
+        font-family: 'Outfit', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 800;
+        color: #000000;
+        background: #ffffff;
+        border: none;
+        border-radius: 14px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        box-shadow: 0 10px 24px rgba(255, 255, 255, 0.25);
+        transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.2s ease;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 32px rgba(255, 255, 255, 0.4);
+        background: #f0f0f0;
+    }
+
+    @media (max-width: 600px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-container {
+            padding: 1.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+
+    <div class="form-header">
+        <div>
+            <h1 class="form-title">
+                <i class="fa-solid fa-building-circle-check"></i> {{ title }}
+            </h1>
+            <p class="form-subtitle">Provide details for your property listing below.</p>
+        </div>
+        <a href="{% url 'profile' %}" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i> Cancel
+        </a>
+    </div>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% if form.errors %}
+            <div style="padding:1rem 1.25rem; margin-bottom:1.5rem; background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.4); border-radius:14px; color:#fca5a5; font-size:0.88rem;">
+                <strong style="display:block; margin-bottom:0.3rem;"><i class="fa-solid fa-triangle-exclamation"></i> Form Errors:</strong>
+                <ul style="margin:0; padding-left:1.25rem;">
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <li>{{ field|title }}: {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <div class="form-grid">
+
+            <!-- Title -->
+            <div class="form-group form-group--full">
+                <label class="field-label" for="{{ form.title.id_for_label }}">
+                    <i class="fa-solid fa-heading"></i> Property Title
+                </label>
+                {{ form.title }}
+            </div>
+
+            <!-- Property Type -->
+            <div class="form-group">
+                <label class="field-label" for="{{ form.property_type.id_for_label }}">
+                    <i class="fa-solid fa-layer-group"></i> Property Type
+                </label>
+                {{ form.property_type }}
+            </div>
+
+            <!-- Monthly Rent -->
+            <div class="form-group">
+                <label class="field-label" for="{{ form.monthly_rent.id_for_label }}">
+                    <i class="fa-solid fa-euro-sign"></i> Monthly Rent (€)
+                </label>
+                {{ form.monthly_rent }}
+            </div>
+
+            <!-- Location -->
+            <div class="form-group form-group--full">
+                <label class="field-label" for="{{ form.location.id_for_label }}">
+                    <i class="fa-solid fa-location-dot"></i> Location / Address
+                </label>
+                {{ form.location }}
+            </div>
+
+            <!-- Bedrooms -->
+            <div class="form-group">
+                <label class="field-label" for="{{ form.bedrooms.id_for_label }}">
+                    <i class="fa-solid fa-bed"></i> Bedrooms
+                </label>
+                {{ form.bedrooms }}
+            </div>
+
+            <!-- Bathrooms -->
+            <div class="form-group">
+                <label class="field-label" for="{{ form.bathroom.id_for_label }}">
+                    <i class="fa-solid fa-bath"></i> Bathrooms
+                </label>
+                {{ form.bathroom }}
+            </div>
+
+            <!-- Description -->
+            <div class="form-group form-group--full">
+                <label class="field-label" for="{{ form.description.id_for_label }}">
+                    <i class="fa-solid fa-align-left"></i> Property Description
+                </label>
+                {{ form.description }}
+            </div>
+
+            <!-- Availability status -->
+            <div class="form-group form-group--full">
+                <label class="field-label">
+                    <i class="fa-solid fa-toggle-on"></i> Availability Status
+                </label>
+                <div class="checkbox-container">
+                    {{ form.availability_status }}
+                    <label class="checkbox-label" for="{{ form.availability_status.id_for_label }}">
+                        Mark as Available for Rent
+                    </label>
+                </div>
+            </div>
+
+            <!-- Property Image -->
+            <div class="form-group form-group--full">
+                <label class="field-label" for="{{ form.image.id_for_label }}">
+                    <i class="fa-solid fa-camera"></i> Cover Photo / Image Upload
+                </label>
+                {{ form.image }}
+                {% if property and property.images.first %}
+                    <div style="margin-top:0.5rem; font-size:0.8rem; color:var(--text-muted); display:flex; align-items:center; gap:0.5rem;">
+                        <i class="fa-solid fa-image"></i> Current Cover: 
+                        <a href="{{ property.images.first.image.url }}" target="_blank" style="color:#ffffff; text-decoration:underline;">View Image</a>
+                    </div>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <!-- Form Action Row -->
+        <div class="form-actions">
+            <a href="{% url 'profile' %}" class="back-btn" style="padding: 0.85rem 1.5rem; font-size: 0.9rem;">
+                Cancel
+            </a>
+            <button type="submit" class="btn-submit">
+                <i class="fa-solid fa-floppy-disk"></i> {{ button_text }}
+            </button>
+        </div>
+
+    </form>
+
+</div>
+{% endblock content %}

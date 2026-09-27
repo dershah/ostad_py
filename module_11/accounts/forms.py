@@ -42,3 +42,16 @@ class UserAuthenticationForm(AuthenticationForm):
             'placeholder' : 'Enter your Password',
             'class' : 'input-box'
         }))
+
+
+class UserProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'phone', 'address', 'avatar']
+        widgets = {
+            'first_name': forms.TextInput(attrs={'placeholder': 'First Name'}),
+            'last_name': forms.TextInput(attrs={'placeholder': 'Last Name'}),
+            'phone': forms.TextInput(attrs={'placeholder': 'Phone Number'}),
+            'address': forms.TextInput(attrs={'placeholder': 'Address'}),
+            'avatar': forms.FileInput(attrs={'accept': 'image/*'}),
+        }

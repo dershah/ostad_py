@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Saj-Sojja | Premium E-Commerce{% endblock %}</title>
+    <title>{% block title %}Rentals | Premium Property Management{% endblock %}</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,16 +16,16 @@
 
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-hover: #4f46e5;
-            --accent: #ec4899;
-            --bg-dark: #0f172a;
-            --bg-card: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: rgba(255, 255, 255, 0.1);
-            --glass-bg: rgba(30, 41, 59, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --primary: #ffffff;
+            --primary-hover: #e5e5e5;
+            --accent: #ffffff;
+            --bg-dark: #000000;
+            --bg-card: #0d0d0d;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --border-color: rgba(255, 255, 255, 0.15);
+            --glass-bg: rgba(13, 13, 13, 0.9);
+            --glass-border: rgba(255, 255, 255, 0.2);
         }
 
         * {
@@ -71,14 +71,14 @@
             width: 40px;
             height: 40px;
             border-radius: 12px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
+            background: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
+            color: #000000;
             font-weight: 800;
             font-size: 1.25rem;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 4px 18px rgba(255, 255, 255, 0.3);
             font-family: 'Outfit', sans-serif;
         }
 
@@ -86,7 +86,7 @@
             font-family: 'Outfit', sans-serif;
             font-size: 1.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #fff 30%, var(--text-muted));
+            background: linear-gradient(135deg, #ffffff 60%, #888888);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: -0.5px;
@@ -117,7 +117,7 @@
         .search-input {
             width: 100%;
             padding: 0.7rem 1.1rem 0.7rem 2.8rem;
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(18, 18, 18, 0.85);
             border: 1px solid var(--border-color);
             border-radius: 99px;
             color: var(--text-main);
@@ -127,32 +127,32 @@
         }
 
         .search-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-            background: rgba(15, 23, 42, 0.85);
+            border-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.95);
         }
 
         .search-input-wrapper:focus-within i.search-icon {
-            color: var(--primary);
+            color: #ffffff;
         }
 
         .search-btn {
             position: absolute;
             right: 5px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+            background: #ffffff;
             border: none;
-            color: #fff;
+            color: #000000;
             padding: 0.5rem 1.1rem;
             border-radius: 99px;
             cursor: pointer;
             font-size: 0.85rem;
-            font-weight: 600;
+            font-weight: 800;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .search-btn:hover {
             transform: scale(1.02);
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 14px rgba(255, 255, 255, 0.35);
         }
 
         /* Right Actions */
@@ -179,9 +179,9 @@
         }
 
         .cart-icon-wrapper:hover {
-            background: rgba(99, 102, 241, 0.15);
-            border-color: var(--primary);
-            color: var(--primary);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #ffffff;
+            color: #ffffff;
             transform: translateY(-2px);
         }
 
@@ -189,10 +189,10 @@
             position: absolute;
             top: -5px;
             right: -5px;
-            background: var(--accent);
-            color: white;
+            background: #ffffff;
+            color: #000000;
             font-size: 0.7rem;
-            font-weight: 700;
+            font-weight: 800;
             width: 20px;
             height: 20px;
             border-radius: 50%;
@@ -200,7 +200,7 @@
             align-items: center;
             justify-content: center;
             border: 2px solid var(--bg-dark);
-            box-shadow: 0 2px 8px rgba(236, 72, 153, 0.4);
+            box-shadow: 0 2px 8px rgba(255, 255, 255, 0.4);
         }
 
         /* Profile Dropdown */
@@ -222,8 +222,8 @@
         }
 
         .profile-btn:hover {
-            border-color: var(--primary);
-            background: rgba(99, 102, 241, 0.1);
+            border-color: #ffffff;
+            background: rgba(255, 255, 255, 0.12);
         }
 
         .profile-img {
@@ -231,12 +231,12 @@
             height: 34px;
             border-radius: 50%;
             object-fit: cover;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
+            background: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            color: #fff;
+            font-weight: 800;
+            color: #000000;
             font-size: 0.9rem;
         }
 
@@ -254,7 +254,7 @@
             background: var(--bg-card);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.9);
             padding: 0.5rem;
             display: none;
             flex-direction: column;
@@ -299,12 +299,12 @@
         }
 
         .dropdown-item:hover {
-            background: rgba(99, 102, 241, 0.15);
-            color: var(--primary);
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
         }
 
         .dropdown-item:hover i {
-            color: var(--primary);
+            color: #ffffff;
         }
 
         .dropdown-divider {
@@ -329,7 +329,7 @@
             text-align: center;
             color: var(--text-muted);
             font-size: 0.85rem;
-            background: rgba(15, 23, 42, 0.8);
+            background: #000000;
             margin-top: auto;
         }
 
@@ -354,38 +354,38 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar">
-        <!-- Left: Logo Saj-Sojja -->
-        <a href="#" class="nav-logo">
+        <!-- Left: Logo -->
+        <a href="{% url 'property_list' %}" class="nav-logo">
             <div class="logo-badge">R</div>
             <span class="logo-text">Rentals</span>
         </a>
 
         <!-- Center: Search Bar -->
-        <form action="#" method="GET" class="nav-search">
-            {% if selected_category %}
-            <input type="hidden" name="category" value="{{ selected_category }}">
+        <form action="{% url 'property_list' %}" method="GET" class="nav-search">
+            {% if selected_type %}
+            <input type="hidden" name="property_type" value="{{ selected_type }}">
             {% endif %}
             <div class="search-input-wrapper">
                 <i class="fa-solid fa-magnifying-glass search-icon"></i>
                 <input type="text" name="q" value="{{ search_query }}"
-                    placeholder="Search..." class="search-input">
+                    placeholder="Search properties by title or location..." class="search-input">
                 <button type="submit" class="search-btn">Search</button>
             </div>
         </form>
 
-        <!-- Right: Cart & Profile -->
+        <!-- Right: Actions & Profile -->
         <div class="nav-actions">
-            <!-- Cart Icon -->
-            <!-- <a href="#" class="cart-icon-wrapper" title="View Cart">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <span class="cart-badge">{{ cart_items_count|default:0 }}</span>
-            </a> -->
+            <a href="{% url 'property_list' %}" class="cart-icon-wrapper" title="Browse Properties" style="text-decoration:none;">
+                <i class="fa-solid fa-building"></i>
+            </a>
 
             <!-- Profile Dropdown -->
             <div class="profile-dropdown-container">
                 <button class="profile-btn" aria-haspopup="true">
                     <div class="profile-img">
-                        {% if user.is_authenticated %}
+                        {% if user.is_authenticated and user.avatar %}
+                        <img src="{{ user.avatar.url }}" alt="Avatar" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+                        {% elif user.is_authenticated %}
                         {{ user.email|slice:":1"|upper }}
                         {% else %}
                         <i class="fa-solid fa-user"></i>
@@ -395,26 +395,41 @@
                 </button>
                 <div class="profile-dropdown-menu">
                     {% if user.is_authenticated %}
-                    <div class="dropdown-item" style="font-weight: 600; color: var(--primary);">
+                    <div class="dropdown-item" style="font-weight: 700; color: #ffffff;">
                         <i class="fa-solid fa-circle-user"></i> {{ user.email }}
                     </div>
                     <div class="dropdown-divider"></div>
-                    <a href="/profile/" class="dropdown-item">
+                    <a href="{% url 'property_list' %}" class="dropdown-item">
+                        <i class="fa-solid fa-building"></i> Properties
+                    </a>
+                    <a href="{% url 'profile' %}" class="dropdown-item">
                         <i class="fa-solid fa-id-card"></i> My Profile
                     </a>
-                    <a href="#" class="dropdown-item">
-                        <i class="fa-solid fa-box-archive"></i> Orders
+                    <a href="{% url 'owner_dashboard' %}" class="dropdown-item">
+                        <i class="fa-solid fa-chart-line"></i> Owner Dashboard
+                    </a>
+                    <a href="{% url 'tenant_dashboard' %}" class="dropdown-item">
+                        <i class="fa-solid fa-paper-plane"></i> Tenant Dashboard
+                    </a>
+                    <a href="{% url 'profile_edit' %}" class="dropdown-item">
+                        <i class="fa-solid fa-pen-to-square"></i> Edit Profile
                     </a>
                     <div class="dropdown-divider"></div>
                     <a href="/admin/" class="dropdown-item">
                         <i class="fa-solid fa-user-shield"></i> Admin Panel
                     </a>
-                    <a href="/logout/" class="dropdown-item" style="color: #ef4444;">
+                    <a href="{% url 'logout' %}" class="dropdown-item" style="color: #ef4444;">
                         <i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> Logout
                     </a>
                     {% else %}
-                    <a href="/admin/" class="dropdown-item">
-                        <i class="fa-solid fa-right-to-bracket"></i> Login / Register
+                    <a href="{% url 'property_list' %}" class="dropdown-item">
+                        <i class="fa-solid fa-building"></i> Browse Properties
+                    </a>
+                    <a href="{% url 'login' %}" class="dropdown-item">
+                        <i class="fa-solid fa-right-to-bracket"></i> Login
+                    </a>
+                    <a href="{% url 'register' %}" class="dropdown-item">
+                        <i class="fa-solid fa-user-plus"></i> Register
                     </a>
                     {% endif %}
                 </div>
@@ -428,7 +443,7 @@
         <div style="margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
             {% for message in messages %}
             <div
-                style="padding: 0.85rem 1.25rem; border-radius: 12px; font-size: 0.9rem; font-weight: 500; background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); color: #a5b4fc;">
+                style="padding: 0.85rem 1.25rem; border-radius: 12px; font-size: 0.9rem; font-weight: 500; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.25); color: #ffffff;">
 
                 <i class="fa-solid {% if message.tags == 'error' %}fa-circle-exclamation{% else %}fa-circle-check{% endif %}"
                     style="margin-right: 0.5rem;"></i>

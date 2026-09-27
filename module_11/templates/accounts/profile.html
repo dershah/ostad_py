@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}My Profile | Saj-Sojja{% endblock %}
+{% block title %}My Profile | Rentals{% endblock %}
 
 {% block extra_css %}
 <style>
     /* ============================================================
-       PROFILE PAGE STYLES
+       PROFILE PAGE STYLES (Ultra-Premium White & Black Theme)
        ============================================================ */
 
     /* ---------- Welcome banner ---------- */
@@ -28,7 +28,7 @@
         -webkit-backdrop-filter: blur(18px);
         border: 1px solid var(--glass-border);
         border-radius: 18px;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
         position: relative;
         overflow: hidden;
         animation: profileRise 0.45s cubic-bezier(0.22, 1, 0.36, 1);
@@ -45,9 +45,9 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        color: #fff;
-        background: linear-gradient(135deg, var(--primary), var(--accent));
-        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+        color: #000000;
+        background: #ffffff;
+        box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
     }
 
     /* ---------- Profile layout ---------- */
@@ -75,7 +75,7 @@
         -webkit-backdrop-filter: blur(18px);
         border: 1px solid var(--glass-border);
         border-radius: 24px;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
         text-align: center;
         overflow: hidden;
     }
@@ -88,7 +88,7 @@
         transform: translateX(-50%);
         width: 240px;
         height: 240px;
-        background: radial-gradient(circle, rgba(99, 102, 241, 0.3), transparent 70%);
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.15), transparent 70%);
         pointer-events: none;
     }
 
@@ -105,10 +105,10 @@
         font-family: 'Outfit', sans-serif;
         font-size: 2.4rem;
         font-weight: 800;
-        color: #fff;
-        background: linear-gradient(135deg, var(--primary), var(--accent));
-        border: 3px solid rgba(255, 255, 255, 0.12);
-        box-shadow: 0 12px 30px rgba(99, 102, 241, 0.4);
+        color: #000000;
+        background: #ffffff;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 12px 30px rgba(255, 255, 255, 0.3);
         overflow: hidden;
     }
 
@@ -151,21 +151,22 @@
         letter-spacing: 0.6px;
         text-transform: uppercase;
         border-radius: 99px;
-        background: rgba(99, 102, 241, 0.15);
-        border: 1px solid rgba(99, 102, 241, 0.35);
-        color: #a5b4fc;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: #ffffff;
     }
 
     .profile-role--owner {
-        background: rgba(236, 72, 153, 0.14);
-        border-color: rgba(236, 72, 153, 0.35);
-        color: #f9a8d4;
+        background: #ffffff;
+        border-color: #ffffff;
+        color: #000000;
+        font-weight: 800;
     }
 
     .profile-role--tenant {
-        background: rgba(16, 185, 129, 0.14);
-        border-color: rgba(16, 185, 129, 0.35);
-        color: #6ee7b7;
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.3);
+        color: #ffffff;
     }
 
     /* quick stats */
@@ -181,7 +182,7 @@
     .stat-box {
         padding: 0.85rem 0.5rem;
         border-radius: 14px;
-        background: rgba(255, 255, 255, 0.04);
+        background: rgba(18, 18, 18, 0.8);
         border: 1px solid var(--border-color);
     }
 
@@ -204,6 +205,12 @@
     }
 
     /* ---------- Right: details card ---------- */
+    .profile-details-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
     .profile-details {
         padding: 1.75rem 1.75rem 2rem;
         background: var(--glass-bg);
@@ -211,7 +218,7 @@
         -webkit-backdrop-filter: blur(18px);
         border: 1px solid var(--glass-border);
         border-radius: 24px;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
     }
 
     .profile-section-head {
@@ -237,7 +244,7 @@
     }
 
     .profile-section-title i {
-        color: var(--primary);
+        color: #ffffff;
         font-size: 0.95rem;
     }
 
@@ -247,20 +254,19 @@
         gap: 0.45rem;
         padding: 0.5rem 1rem;
         font-size: 0.82rem;
-        font-weight: 600;
-        color: var(--text-main);
+        font-weight: 700;
+        color: #000000;
         text-decoration: none;
         border-radius: 99px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid var(--border-color);
+        background: #ffffff;
+        border: 1px solid #ffffff;
         transition: all 0.2s ease;
     }
 
     .profile-edit-link:hover {
-        background: rgba(99, 102, 241, 0.15);
-        border-color: var(--primary);
-        color: var(--primary);
+        background: #e5e5e5;
         transform: translateY(-2px);
+        box-shadow: 0 4px 14px rgba(255, 255, 255, 0.3);
     }
 
     /* info grid */
@@ -276,14 +282,14 @@
         gap: 0.35rem;
         padding: 0.95rem 1.1rem;
         border-radius: 14px;
-        background: rgba(15, 23, 42, 0.5);
+        background: rgba(18, 18, 18, 0.8);
         border: 1px solid var(--border-color);
         transition: border-color 0.2s ease, background 0.2s ease;
     }
 
     .info-item:hover {
-        border-color: rgba(99, 102, 241, 0.4);
-        background: rgba(99, 102, 241, 0.07);
+        border-color: rgba(255, 255, 255, 0.35);
+        background: rgba(255, 255, 255, 0.06);
     }
 
     .info-item--full {
@@ -302,7 +308,7 @@
     }
 
     .info-label i {
-        color: var(--primary);
+        color: #ffffff;
         font-size: 0.75rem;
     }
 
@@ -338,22 +344,22 @@
         gap: 0.55rem;
         font-family: 'Outfit', sans-serif;
         font-size: 0.9rem;
-        font-weight: 700;
+        font-weight: 800;
         letter-spacing: 0.3px;
-        color: #fff;
+        color: #000000;
         text-decoration: none;
-        background: linear-gradient(135deg, var(--primary), var(--accent));
+        background: #ffffff;
         border: none;
         border-radius: 14px;
         cursor: pointer;
-        box-shadow: 0 10px 24px rgba(99, 102, 241, 0.3);
+        box-shadow: 0 10px 24px rgba(255, 255, 255, 0.25);
         transition: transform 0.2s ease, box-shadow 0.25s ease, filter 0.25s ease;
     }
 
     .profile-btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 14px 32px rgba(236, 72, 153, 0.35);
-        filter: brightness(1.06);
+        box-shadow: 0 14px 32px rgba(255, 255, 255, 0.4);
+        background: #f0f0f0;
     }
 
     .profile-btn--ghost {
@@ -364,14 +370,15 @@
     }
 
     .profile-btn--ghost:hover {
-        background: rgba(99, 102, 241, 0.15);
-        border-color: var(--primary);
-        color: var(--primary);
-        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.2);
+        background: rgba(255, 255, 255, 0.15);
+        border-color: #ffffff;
+        color: #ffffff;
+        box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
     }
 
     .profile-btn--danger {
         background: linear-gradient(135deg, #ef4444, #b91c1c);
+        color: #ffffff;
         box-shadow: 0 10px 24px rgba(239, 68, 68, 0.28);
     }
 
@@ -379,7 +386,70 @@
         box-shadow: 0 14px 30px rgba(239, 68, 68, 0.4);
     }
 
-    /* ---------- Responsive ---------- */
+    /* ---------- Owner Properties List ---------- */
+    .owner-properties-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 1.15rem;
+        margin-top: 1rem;
+    }
+
+    .owner-prop-card {
+        background: rgba(18, 18, 18, 0.8);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .owner-prop-card:hover {
+        transform: translateY(-3px);
+        border-color: #ffffff;
+    }
+
+    .owner-prop-img {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .owner-prop-body {
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        flex: 1;
+    }
+
+    .owner-prop-title {
+        font-family: 'Outfit', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--text-main);
+        line-height: 1.3;
+    }
+
+    .owner-prop-meta {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+    .owner-prop-price {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: #ffffff;
+        margin-top: auto;
+        padding-top: 0.5rem;
+    }
+
+    /* Responsive */
     @media (max-width: 900px) {
         #section-profile {
             grid-template-columns: 1fr;
@@ -442,11 +512,11 @@
         <!-- Role badge -->
         {% if profile.role == 'OWNER' %}
             <span class="profile-role profile-role--owner">
-                <i class="fa-solid fa-house-chimney-user"></i> Owner
+                <i class="fa-solid fa-house-chimney-user"></i> Property Owner
             </span>
         {% else %}
             <span class="profile-role profile-role--tenant">
-                <i class="fa-solid fa-user-check"></i> Tenant
+                <i class="fa-solid fa-user-check"></i> Tenant Account
             </span>
         {% endif %}
 
@@ -458,96 +528,156 @@
             </div>
             <div class="stat-box">
                 <span class="stat-value">
-                    {% if profile.phone %}
-                        <i class="fa-solid fa-circle-check" style="color:#6ee7b7;font-size:.9rem;"></i>
+                    {% if profile.role == 'OWNER' %}
+                        {{ user_properties|length }} Listing{% if user_properties|length != 1 %}s{% endif %}
                     {% else %}
-                        &mdash;
+                        Tenant
                     {% endif %}
                 </span>
-                <span class="stat-label">Phone</span>
+                <span class="stat-label">Status</span>
             </div>
         </div>
 
     </aside>
 
-    <!-- ================= RIGHT: DETAILS CARD ================= -->
-    <div class="profile-details">
+    <!-- ================= RIGHT: DETAILS & PROPERTIES CARD ================= -->
+    <div class="profile-details-wrapper">
 
-        <div class="profile-section-head">
-            <h3 class="profile-section-title">
-                <i class="fa-solid fa-id-card"></i> Account Information
-            </h3>
-            <a href="#" class="profile-edit-link">
-                <i class="fa-solid fa-pen"></i> Edit Profile
-            </a>
+        <!-- Account Info -->
+        <div class="profile-details">
+            <div class="profile-section-head">
+                <h3 class="profile-section-title">
+                    <i class="fa-solid fa-id-card"></i> Account Information
+                </h3>
+                <a href="{% url 'profile_edit' %}" class="profile-edit-link">
+                    <i class="fa-solid fa-pen"></i> Edit Profile
+                </a>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">
+                        <i class="fa-solid fa-user"></i> First Name
+                    </span>
+                    <span class="info-value {% if not profile.first_name %}info-value--muted{% endif %}">
+                        {{ profile.first_name|default:"Not set" }}
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-label">
+                        <i class="fa-solid fa-user"></i> Last Name
+                    </span>
+                    <span class="info-value {% if not profile.last_name %}info-value--muted{% endif %}">
+                        {{ profile.last_name|default:"Not set" }}
+                    </span>
+                </div>
+
+                <div class="info-item info-item--full">
+                    <span class="info-label">
+                        <i class="fa-solid fa-envelope"></i> Email Address
+                    </span>
+                    <span class="info-value">{{ profile.email }}</span>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-label">
+                        <i class="fa-solid fa-phone"></i> Phone
+                    </span>
+                    <span class="info-value {% if not profile.phone %}info-value--muted{% endif %}">
+                        {{ profile.phone|default:"Not set" }}
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-label">
+                        <i class="fa-solid fa-shield-halved"></i> Account Type
+                    </span>
+                    <span class="info-value">{{ profile.get_role_display }}</span>
+                </div>
+
+                <div class="info-item info-item--full">
+                    <span class="info-label">
+                        <i class="fa-solid fa-location-dot"></i> Address
+                    </span>
+                    <span class="info-value {% if not profile.address %}info-value--muted{% endif %}">
+                        {{ profile.address|default:"No address provided" }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Action row -->
+            <div class="profile-actions">
+                <a href="{% url 'profile_edit' %}" class="profile-btn">
+                    <i class="fa-solid fa-pen-to-square"></i> Edit Profile
+                </a>
+                <a href="{% url 'property_create' %}" class="profile-btn profile-btn--ghost">
+                    <i class="fa-solid fa-plus"></i> Add Property
+                </a>
+                <a href="{% url 'property_list' %}" class="profile-btn profile-btn--ghost">
+                    <i class="fa-solid fa-building"></i> Browse
+                </a>
+                <a href="{% url 'logout' %}" class="profile-btn profile-btn--danger">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </a>
+            </div>
         </div>
 
-        <div class="info-grid">
-
-            <div class="info-item">
-                <span class="info-label">
-                    <i class="fa-solid fa-user"></i> First Name
-                </span>
-                <span class="info-value {% if not profile.first_name %}info-value--muted{% endif %}">
-                    {{ profile.first_name|default:"Not set" }}
-                </span>
+        <!-- ================= OWNER ONLY PROPERTIES SECTION ================= -->
+        {% if profile.role == 'OWNER' %}
+        <div class="profile-details">
+            <div class="profile-section-head">
+                <h3 class="profile-section-title">
+                    <i class="fa-solid fa-house-user"></i> My Listed Properties
+                </h3>
+                <a href="{% url 'property_create' %}" class="profile-edit-link">
+                    <i class="fa-solid fa-plus"></i> Add Property
+                </a>
             </div>
 
-            <div class="info-item">
-                <span class="info-label">
-                    <i class="fa-solid fa-user"></i> Last Name
-                </span>
-                <span class="info-value {% if not profile.last_name %}info-value--muted{% endif %}">
-                    {{ profile.last_name|default:"Not set" }}
-                </span>
-            </div>
-
-            <div class="info-item info-item--full">
-                <span class="info-label">
-                    <i class="fa-solid fa-envelope"></i> Email Address
-                </span>
-                <span class="info-value">{{ profile.email }}</span>
-            </div>
-
-            <div class="info-item">
-                <span class="info-label">
-                    <i class="fa-solid fa-phone"></i> Phone
-                </span>
-                <span class="info-value {% if not profile.phone %}info-value--muted{% endif %}">
-                    {{ profile.phone|default:"Not set" }}
-                </span>
-            </div>
-
-            <div class="info-item">
-                <span class="info-label">
-                    <i class="fa-solid fa-shield-halved"></i> Account Type
-                </span>
-                <span class="info-value">{{ profile.get_role_display }}</span>
-            </div>
-
-            <div class="info-item info-item--full">
-                <span class="info-label">
-                    <i class="fa-solid fa-location-dot"></i> Address
-                </span>
-                <span class="info-value {% if not profile.address %}info-value--muted{% endif %}">
-                    {{ profile.address|default:"No address provided" }}
-                </span>
-            </div>
-
+            {% if user_properties %}
+                <div class="owner-properties-grid">
+                    {% for p in user_properties %}
+                    <div class="owner-prop-card">
+                        <a href="{% url 'property_detail' p.id %}" style="text-decoration:none; color:inherit; display:flex; flex-direction:column; flex:1;">
+                            {% if p.images.first %}
+                                <img src="{{ p.images.first.image.url }}" alt="{{ p.title }}" class="owner-prop-img">
+                            {% else %}
+                                <div class="owner-prop-img" style="display:flex;align-items:center;justify-content:center;color:#ffffff;font-size:1.8rem;">
+                                    <i class="fa-solid fa-building"></i>
+                                </div>
+                            {% endif %}
+                            <div class="owner-prop-body">
+                                <h4 class="owner-prop-title">{{ p.title }}</h4>
+                                <p class="owner-prop-meta">
+                                    <i class="fa-solid fa-location-dot"></i> {{ p.location }}
+                                </p>
+                                <div class="owner-prop-price">
+                                    €{{ p.monthly_rent|floatformat:"0g" }} / mo
+                                </div>
+                            </div>
+                        </a>
+                        <div style="padding: 0 1rem 1rem;">
+                            <a href="{% url 'property_update' p.id %}" class="profile-edit-link" style="width:100%; justify-content:center; padding:0.45rem; font-size:0.78rem;">
+                                <i class="fa-solid fa-pen-to-square"></i> Edit Listing
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div style="padding: 2.5rem 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.9rem; background: rgba(18,18,18,0.8); border-radius: 16px; border: 1px dashed var(--border-color);">
+                    <i class="fa-solid fa-house-chimney-crack" style="font-size: 2.2rem; color: #ffffff; margin-bottom: 0.75rem; display: block;"></i>
+                    You haven't listed any property yet.
+                    <div style="margin-top: 1rem;">
+                        <a href="{% url 'property_create' %}" class="profile-edit-link" style="display:inline-flex;">
+                            <i class="fa-solid fa-plus"></i> List Your First Property
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
         </div>
-
-        <!-- Action row -->
-        <div class="profile-actions">
-            <a href="#" class="profile-btn">
-                <i class="fa-solid fa-pen-to-square"></i> Edit Profile
-            </a>
-            <a href="#" class="profile-btn profile-btn--ghost">
-                <i class="fa-solid fa-box-archive"></i> My Orders
-            </a>
-            <a href="#" class="profile-btn profile-btn--danger">
-                <i class="fa-solid fa-right-from-bracket"></i> Logout
-            </a>
-        </div>
+        {% endif %}
 
     </div>
 

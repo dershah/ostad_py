@@ -1,0 +1,679 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ property.title }} | Rentals{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ============================================================
+       PROPERTY DETAIL PAGE STYLES (Ultra-Premium White & Black Theme)
+       ============================================================ */
+
+    .detail-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        animation: detailRise 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes detailRise {
+        from { opacity: 0; transform: translateY(18px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Back link */
+    .back-nav {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: color 0.2s ease, transform 0.2s ease;
+        width: fit-content;
+    }
+
+    .back-nav:hover {
+        color: #ffffff;
+        transform: translateX(-3px);
+    }
+
+    /* Header Banner */
+    .detail-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        padding-bottom: 1.25rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .detail-title-box {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        max-width: 800px;
+    }
+
+    .detail-badges {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+    }
+
+    .detail-badge {
+        padding: 0.38rem 0.85rem;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        border-radius: 99px;
+        background: #ffffff;
+        color: #000000;
+    }
+
+    .detail-status {
+        padding: 0.35rem 0.85rem;
+        font-size: 0.72rem;
+        font-weight: 700;
+        border-radius: 99px;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+    .detail-status--available {
+        background: rgba(16, 185, 129, 0.15);
+        border: 1px solid rgba(16, 185, 129, 0.35);
+        color: #6ee7b7;
+    }
+
+    .detail-status--rented {
+        background: rgba(239, 68, 68, 0.15);
+        border: 1px solid rgba(239, 68, 68, 0.35);
+        color: #fca5a5;
+    }
+
+    .detail-title {
+        font-family: 'Outfit', sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        letter-spacing: -0.6px;
+        color: var(--text-main);
+        line-height: 1.25;
+    }
+
+    .detail-location {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.95rem;
+        color: var(--text-muted);
+    }
+
+    .detail-location i {
+        color: #ffffff;
+    }
+
+    .detail-price-tag {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .detail-price-val {
+        font-family: 'Outfit', sans-serif;
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #ffffff;
+        letter-spacing: -0.5px;
+    }
+
+    .detail-price-sub {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        font-weight: 500;
+    }
+
+    /* Gallery Section */
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 1rem;
+        border-radius: 24px;
+        overflow: hidden;
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+    }
+
+    .gallery-main {
+        position: relative;
+        aspect-ratio: 16 / 10;
+        background: #000000;
+        overflow: hidden;
+    }
+
+    .gallery-main img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.4s ease;
+    }
+
+    .gallery-main img:hover {
+        transform: scale(1.02);
+    }
+
+    .gallery-side {
+        display: grid;
+        grid-template-rows: repeat(2, 1fr);
+        gap: 1rem;
+        padding: 0;
+    }
+
+    .gallery-thumb {
+        position: relative;
+        overflow: hidden;
+        background: rgba(18, 18, 18, 0.8);
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+    }
+
+    .gallery-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+    }
+
+    .gallery-thumb img:hover {
+        transform: scale(1.05);
+    }
+
+    .gallery-empty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        padding: 4rem;
+        color: var(--text-muted);
+        text-align: center;
+        grid-column: 1 / -1;
+    }
+
+    .gallery-empty i {
+        font-size: 3.5rem;
+        color: #ffffff;
+        opacity: 0.6;
+    }
+
+    /* Layout Content Grid */
+    .content-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+        align-items: start;
+    }
+
+    /* Left Specs Card */
+    .specs-card {
+        padding: 2rem;
+        background: var(--glass-bg);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
+        display: flex;
+        flex-direction: column;
+        gap: 1.75rem;
+    }
+
+    .section-heading {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--text-main);
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+    }
+
+    .section-heading i {
+        color: #ffffff;
+    }
+
+    /* Highlights Pills */
+    .highlights-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+
+    .highlight-pill {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        padding: 1rem 1.1rem;
+        background: rgba(18, 18, 18, 0.8);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+    }
+
+    .highlight-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: #ffffff;
+        color: #000000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+    }
+
+    .highlight-text {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .highlight-val {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: var(--text-main);
+    }
+
+    .highlight-lbl {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .description-text {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        color: #d4d4d4;
+        white-space: pre-line;
+    }
+
+    /* Right Sidebar (Owner Card) */
+    .sidebar-card {
+        padding: 1.75rem;
+        background: var(--glass-bg);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        position: sticky;
+        top: 6rem;
+    }
+
+    .owner-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .owner-avatar {
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #000000;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 800;
+        font-size: 1.2rem;
+        overflow: hidden;
+        border: 2px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .owner-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .owner-details {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .owner-name {
+        font-family: 'Outfit', sans-serif;
+        font-weight: 700;
+        font-size: 1.05rem;
+        color: var(--text-main);
+    }
+
+    .owner-role {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .contact-btn {
+        width: 100%;
+        padding: 0.85rem;
+        background: #ffffff;
+        border: none;
+        border-radius: 14px;
+        color: #000000;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 800;
+        font-size: 0.9rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        box-shadow: 0 8px 24px rgba(255, 255, 255, 0.25);
+        transition: all 0.22s ease;
+    }
+
+    .contact-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(255, 255, 255, 0.4);
+        background: #f0f0f0;
+    }
+
+    @media (max-width: 900px) {
+        .gallery-grid, .content-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .gallery-side {
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: 1fr;
+        }
+
+        .highlights-row {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="detail-container">
+
+    <!-- Top Navigation -->
+    <a href="{% url 'property_list' %}" class="back-nav">
+        <i class="fa-solid fa-arrow-left"></i> Back to Properties
+    </a>
+
+    <!-- Header info -->
+    <div class="detail-header">
+        <div class="detail-title-box">
+            <div class="detail-badges">
+                <span class="detail-badge">
+                    {{ property.get_property_type_display|default:property.property_type }}
+                </span>
+                {% if property.availability_status %}
+                    <span class="detail-status detail-status--available">
+                        <i class="fa-solid fa-circle-check"></i> Available Now
+                    </span>
+                {% else %}
+                    <span class="detail-status detail-status--rented">
+                        <i class="fa-solid fa-circle-xmark"></i> Currently Rented
+                    </span>
+                {% endif %}
+            </div>
+            <h1 class="detail-title">{{ property.title }}</h1>
+            <p class="detail-location">
+                <i class="fa-solid fa-location-dot"></i> {{ property.location }}
+            </p>
+        </div>
+
+        <div class="detail-price-tag">
+            <span class="detail-price-val">€{{ property.monthly_rent|floatformat:"0g" }}</span>
+            <span class="detail-price-sub">per month</span>
+            {% if request.user == property.owner %}
+                <a href="{% url 'property_update' property.id %}" style="margin-top:0.75rem; display:inline-flex; align-items:center; gap:0.45rem; padding:0.45rem 1rem; font-size:0.8rem; font-weight:700; color:#000000; background:#ffffff; border-radius:99px; text-decoration:none;">
+                    <i class="fa-solid fa-pen-to-square"></i> Edit Listing
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Media Gallery -->
+    <div class="gallery-grid">
+        {% if images %}
+            <div class="gallery-main">
+                <img id="main-image" src="{{ cover.image.url }}" alt="{{ property.title }}">
+            </div>
+            {% if images|length > 1 %}
+            <div class="gallery-side">
+                {% for img in images %}
+                    <div class="gallery-thumb">
+                        <img src="{{ img.image.url }}" alt="Thumbnail {{ forloop.counter }}" onclick="document.getElementById('main-image').src='{{ img.image.url }}'">
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% else %}
+            <div class="gallery-empty">
+                <i class="fa-solid fa-image"></i>
+                <h3>No Media Available</h3>
+                <p>No photos have been uploaded for this property listing yet.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Content & Sidebar -->
+    <div class="content-grid">
+        <div class="specs-card">
+            <!-- Highlights -->
+            <h3 class="section-heading">
+                <i class="fa-solid fa-sliders"></i> Property Highlights
+            </h3>
+            <div class="highlights-row">
+                <div class="highlight-pill">
+                    <div class="highlight-icon">
+                        <i class="fa-solid fa-bed"></i>
+                    </div>
+                    <div class="highlight-text">
+                        <span class="highlight-val">{{ property.bedrooms }} Bed{% if property.bedrooms > 1 %}s{% endif %}</span>
+                        <span class="highlight-lbl">Bedrooms</span>
+                    </div>
+                </div>
+
+                <div class="highlight-pill">
+                    <div class="highlight-icon">
+                        <i class="fa-solid fa-bath"></i>
+                    </div>
+                    <div class="highlight-text">
+                        <span class="highlight-val">{{ property.bathroom }} Bath{% if property.bathroom > 1 %}s{% endif %}</span>
+                        <span class="highlight-lbl">Bathrooms</span>
+                    </div>
+                </div>
+
+                <div class="highlight-pill">
+                    <div class="highlight-icon">
+                        <i class="fa-solid fa-building"></i>
+                    </div>
+                    <div class="highlight-text">
+                        <span class="highlight-val">{{ property.get_property_type_display }}</span>
+                        <span class="highlight-lbl">Property Type</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <h3 class="section-heading" style="margin-top: 0.5rem;">
+                <i class="fa-solid fa-align-left"></i> Description
+            </h3>
+            <div class="description-text">
+                {{ property.description }}
+            </div>
+
+            <!-- ================= REVIEWS & RATINGS SECTION ================= -->
+            <div id="review-section" style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
+                <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; margin-bottom:1.25rem;">
+                    <h3 class="section-heading" style="margin:0;">
+                        <i class="fa-solid fa-star" style="color:#ffffff;"></i> Reviews & Ratings
+                    </h3>
+                    <div style="font-family:'Outfit',sans-serif; font-size:1.1rem; font-weight:800; color:#ffffff;">
+                        {% if avg_rating %}
+                            {{ avg_rating }} ★ <span style="font-size:0.8rem; color:var(--text-muted); font-weight:500;">({{ reviews|length }} review{% if reviews|length != 1 %}s{% endif %})</span>
+                        {% else %}
+                            <span style="font-size:0.85rem; color:var(--text-muted); font-weight:500;">No reviews yet</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Leave Review Form (for tenants with accepted rental request) -->
+                {% if user.is_authenticated and user_accepted_request and not user_has_reviewed %}
+                    <div style="padding:1.25rem; background:rgba(18,18,18,0.9); border:1px solid #ffffff; border-radius:18px; margin-bottom:1.5rem;">
+                        <h4 style="font-family:'Outfit',sans-serif; font-size:1rem; font-weight:700; color:#ffffff; margin-bottom:0.75rem;">
+                            <i class="fa-solid fa-pen"></i> Leave a Review
+                        </h4>
+                        <form action="{% url 'create_review' property.id %}" method="POST" style="display:flex; flex-direction:column; gap:0.85rem;">
+                            {% csrf_token %}
+                            <div>
+                                <label style="display:block; font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.35rem;">
+                                    Rating (1 to 5 Stars)
+                                </label>
+                                {{ review_form.rating }}
+                            </div>
+                            <div>
+                                <label style="display:block; font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.35rem;">
+                                    Your Comment
+                                </label>
+                                {{ review_form.comment }}
+                            </div>
+                            <button type="submit" class="contact-btn" style="width:fit-content; padding:0.65rem 1.5rem; font-size:0.85rem;">
+                                <i class="fa-solid fa-paper-plane"></i> Submit Review
+                            </button>
+                        </form>
+                    </div>
+                {% endif %}
+
+                <!-- Existing Reviews List -->
+                {% if reviews %}
+                    <div style="display:flex; flex-direction:column; gap:1rem;">
+                        {% for rev in reviews %}
+                        <div style="padding:1.1rem; background:rgba(18,18,18,0.8); border:1px solid var(--border-color); border-radius:16px; display:flex; flex-direction:column; gap:0.5rem;">
+                            <div style="display:flex; align-items:center; justify-content:space-between;">
+                                <div style="display:flex; align-items:center; gap:0.6rem;">
+                                    <div style="width:34px; height:34px; border-radius:50%; background:#ffffff; color:#000000; font-family:'Outfit',sans-serif; font-weight:800; font-size:0.85rem; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+                                        {% if rev.tenant.avatar %}
+                                            <img src="{{ rev.tenant.avatar.url }}" alt="{{ rev.tenant.email }}" style="width:100%;height:100%;object-fit:cover;">
+                                        {% else %}
+                                            {{ rev.tenant.email|slice:":1"|upper }}
+                                        {% endif %}
+                                    </div>
+                                    <span style="font-family:'Outfit',sans-serif; font-weight:700; font-size:0.92rem; color:var(--text-main);">
+                                        {{ rev.tenant.first_name|default:rev.tenant.email }}
+                                    </span>
+                                </div>
+                                <div style="color:#ffffff; font-family:'Outfit',sans-serif; font-weight:800; font-size:0.9rem;">
+                                    {{ rev.rating }} ★
+                                </div>
+                            </div>
+                            <p style="font-size:0.9rem; color:#d4d4d4; line-height:1.5; margin:0;">
+                                {{ rev.comment }}
+                            </p>
+                            <span style="font-size:0.75rem; color:var(--text-muted); align-self:flex-end;">
+                                {{ rev.created_at|date:"M d, Y" }}
+                            </span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p style="font-size:0.88rem; color:var(--text-muted); font-style:italic;">
+                        No reviews posted yet for this property.
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar-card">
+            <h3 class="section-heading">
+                <i class="fa-solid fa-user-tie"></i> Property Owner
+            </h3>
+            <div class="owner-info">
+                <div class="owner-avatar">
+                    {% if property.owner.avatar %}
+                        <img src="{{ property.owner.avatar.url }}" alt="{{ property.owner.email }}">
+                    {% else %}
+                        {{ property.owner.email|slice:":1"|upper }}
+                    {% endif %}
+                </div>
+                <div class="owner-details">
+                    <span class="owner-name">
+                        {% if property.owner.first_name or property.owner.last_name %}
+                            {{ property.owner.first_name }} {{ property.owner.last_name }}
+                        {% else %}
+                            {{ property.owner.email }}
+                        {% endif %}
+                    </span>
+                    <span class="owner-role">Property Manager</span>
+                </div>
+            </div>
+
+            <!-- Rental Request Box -->
+            <div style="padding-top:1rem; border-top:1px solid var(--border-color); display:flex; flex-direction:column; gap:0.75rem;">
+                <h4 style="font-family:'Outfit',sans-serif; font-size:1rem; font-weight:700; color:#ffffff; margin:0;">
+                    <i class="fa-solid fa-key"></i> Rental Request
+                </h4>
+
+                {% if not user.is_authenticated %}
+                    <a href="{% url 'login' %}" class="contact-btn">
+                        <i class="fa-solid fa-right-to-bracket"></i> Login to Send Request
+                    </a>
+                {% elif user == property.owner %}
+                    <div style="padding:0.75rem; background:rgba(255,255,255,0.08); border-radius:12px; font-size:0.82rem; color:var(--text-muted); text-align:center;">
+                        <i class="fa-solid fa-shield-halved"></i> You own this property listing.
+                    </div>
+                {% elif user_pending_request %}
+                    <div style="padding:0.85rem; background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.4); border-radius:14px; font-size:0.85rem; color:#fbbf24; text-align:center; font-weight:600;">
+                        <i class="fa-solid fa-clock"></i> Request Sent (Pending)
+                    </div>
+                    <a href="{% url 'tenant_dashboard' %}" class="contact-btn" style="background:rgba(255,255,255,0.1); color:#ffffff; border:1px solid rgba(255,255,255,0.25);">
+                        View My Dashboard
+                    </a>
+                {% elif user_accepted_request %}
+                    <div style="padding:0.85rem; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); border-radius:14px; font-size:0.85rem; color:#6ee7b7; text-align:center; font-weight:700;">
+                        <i class="fa-solid fa-circle-check"></i> Request Accepted!
+                    </div>
+                {% else %}
+                    <form action="{% url 'create_rental_request' property.id %}" method="POST" style="display:flex; flex-direction:column; gap:0.75rem;">
+                        {% csrf_token %}
+                        {{ request_form.message }}
+                        <button type="submit" class="contact-btn">
+                            <i class="fa-solid fa-paper-plane"></i> Send Rental Request
+                        </button>
+                    </form>
+                {% endif %}
+            </div>
+
+            <a href="mailto:{{ property.owner.email }}?subject=Inquiry regarding {{ property.title|urlencode }}" class="contact-btn" style="background:rgba(255,255,255,0.05); color:var(--text-main); border:1px solid var(--border-color); box-shadow:none;">
+                <i class="fa-solid fa-envelope"></i> Contact Owner
+            </a>
+        </aside>
+    </div>
+
+</div>
+{% endblock content %}

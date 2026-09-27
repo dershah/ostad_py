@@ -1,2 +1,282 @@
 {% extends 'base.html' %}
-<h1>Edit</h1>
+
+{% block title %}Edit Profile | Rentals{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ============================================================
+       PROFILE EDIT STYLES (Ultra-Premium White & Black Theme)
+       ============================================================ */
+
+    .edit-profile-card {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 2.25rem 2rem 2.5rem;
+        background: var(--glass-bg);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8);
+        position: relative;
+        overflow: hidden;
+        animation: formRise 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes formRise {
+        from { opacity: 0; transform: translateY(18px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .edit-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .edit-title {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.6rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: var(--text-main);
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+    }
+
+    .edit-title i {
+        color: #ffffff;
+    }
+
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.5rem 0.95rem;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-decoration: none;
+        border-radius: 99px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-color);
+        transition: all 0.2s ease;
+    }
+
+    .back-btn:hover {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.15);
+        border-color: #ffffff;
+    }
+
+    .edit-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+    }
+
+    .form-group label {
+        font-size: 0.76rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: var(--text-muted);
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="tel"],
+    .form-group input[type="file"] {
+        width: 100%;
+        padding: 0.85rem 1.05rem;
+        font-family: inherit;
+        font-size: 0.92rem;
+        color: var(--text-main);
+        background: rgba(18, 18, 18, 0.9);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        outline: none;
+        transition: all 0.25s ease;
+    }
+
+    .form-group input:focus {
+        border-color: #ffffff;
+        background: rgba(0, 0, 0, 0.95);
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Current avatar preview */
+    .avatar-preview-box {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        padding: 1rem;
+        border-radius: 16px;
+        background: rgba(18, 18, 18, 0.6);
+        border: 1px solid var(--border-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .current-avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #ffffff;
+        background: #ffffff;
+        color: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 800;
+        font-size: 1.5rem;
+    }
+
+    .avatar-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+
+    .avatar-info label {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--text-main);
+    }
+
+    .avatar-info span {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+    }
+
+    .form-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.85rem;
+        margin-top: 1rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .btn-save {
+        padding: 0.85rem 1.6rem;
+        font-family: 'Outfit', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 800;
+        letter-spacing: 0.3px;
+        color: #000000;
+        background: #ffffff;
+        border: none;
+        border-radius: 14px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 8px 24px rgba(255, 255, 255, 0.25);
+        transition: all 0.22s ease;
+    }
+
+    .btn-save:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(255, 255, 255, 0.4);
+        background: #f0f0f0;
+    }
+
+    .btn-cancel {
+        padding: 0.85rem 1.3rem;
+        font-family: 'Outfit', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-decoration: none;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-color);
+        transition: all 0.2s ease;
+    }
+
+    .btn-cancel:hover {
+        color: var(--text-main);
+        background: rgba(255, 255, 255, 0.1);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="edit-profile-card">
+    <div class="edit-header">
+        <h2 class="edit-title">
+            <i class="fa-solid fa-user-pen"></i> Edit Profile
+        </h2>
+        <a href="{% url 'profile' %}" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i> Cancel
+        </a>
+    </div>
+
+    <form method="POST" enctype="multipart/form-data" class="edit-form">
+        {% csrf_token %}
+
+        <!-- Avatar Section -->
+        <div class="avatar-preview-box">
+            <div class="current-avatar">
+                {% if user.avatar %}
+                    <img src="{{ user.avatar.url }}" alt="Avatar" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+                {% else %}
+                    {{ user.email|slice:":1"|upper }}
+                {% endif %}
+            </div>
+            <div class="avatar-info">
+                <label>Profile Picture</label>
+                <span>Upload a new avatar image below</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.avatar.id_for_label }}">Change Avatar</label>
+            {{ form.avatar }}
+            {% if form.avatar.errors %}
+                <span style="color:#ef4444; font-size:0.8rem;">{{ form.avatar.errors.0 }}</span>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.first_name.id_for_label }}">First Name</label>
+            {{ form.first_name }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+            {{ form.last_name }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.phone.id_for_label }}">Phone Number</label>
+            {{ form.phone }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.address.id_for_label }}">Address</label>
+            {{ form.address }}
+        </div>
+
+        <div class="form-actions">
+            <a href="{% url 'profile' %}" class="btn-cancel">Cancel</a>
+            <button type="submit" class="btn-save">
+                <i class="fa-solid fa-check"></i> Save Changes
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

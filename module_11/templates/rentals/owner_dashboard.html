@@ -1,0 +1,456 @@
+{% extends 'base.html' %}
+
+{% block title %}Owner Dashboard | Rentals{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ============================================================
+       OWNER DASHBOARD STYLES (Ultra-Premium White & Black Theme)
+       ============================================================ */
+
+    .dash-container {
+        max-width: 1180px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        animation: dashRise 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes dashRise {
+        from { opacity: 0; transform: translateY(18px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .dash-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding-bottom: 1.25rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .dash-title {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: var(--text-main);
+        letter-spacing: -0.5px;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .dash-title i {
+        color: #ffffff;
+    }
+
+    .btn-action-main {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        padding: 0.75rem 1.4rem;
+        font-family: 'Outfit', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 800;
+        color: #000000;
+        background: #ffffff;
+        border: none;
+        border-radius: 99px;
+        text-decoration: none;
+        box-shadow: 0 10px 24px rgba(255, 255, 255, 0.25);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .btn-action-main:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 30px rgba(255, 255, 255, 0.4);
+        background: #f0f0f0;
+    }
+
+    /* Stats Grid (5 Cards) */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1rem;
+    }
+
+    .stat-card {
+        padding: 1.25rem 1rem;
+        background: var(--glass-bg);
+        backdrop-filter: blur(18px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.35rem;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
+        transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-3px);
+        border-color: #ffffff;
+    }
+
+    .stat-card-val {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: #ffffff;
+    }
+
+    .stat-card-lbl {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: var(--text-muted);
+    }
+
+    .stat-card-icon {
+        font-size: 1.1rem;
+        color: #ffffff;
+        margin-bottom: 0.2rem;
+    }
+
+    /* Content Cards */
+    .panel-card {
+        padding: 1.75rem;
+        background: var(--glass-bg);
+        backdrop-filter: blur(18px);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85);
+    }
+
+    .panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.25rem;
+        padding-bottom: 0.85rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .panel-title {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-main);
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+    }
+
+    .panel-title i {
+        color: #ffffff;
+    }
+
+    /* Requests Table */
+    .requests-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 0.5rem;
+    }
+
+    .requests-table th {
+        text-align: left;
+        padding: 0.85rem 1rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: var(--text-muted);
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .requests-table td {
+        padding: 1rem;
+        font-size: 0.9rem;
+        color: var(--text-main);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        vertical-align: middle;
+    }
+
+    .requests-table tr:hover td {
+        background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* Status Badges */
+    .badge-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.35rem 0.85rem;
+        font-size: 0.74rem;
+        font-weight: 800;
+        border-radius: 99px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .badge-status--pending {
+        background: rgba(245, 158, 11, 0.15);
+        border: 1px solid rgba(245, 158, 11, 0.4);
+        color: #fbbf24;
+    }
+
+    .badge-status--accepted {
+        background: rgba(16, 185, 129, 0.15);
+        border: 1px solid rgba(16, 185, 129, 0.4);
+        color: #6ee7b7;
+    }
+
+    .badge-status--rejected {
+        background: rgba(239, 68, 68, 0.15);
+        border: 1px solid rgba(239, 68, 68, 0.4);
+        color: #fca5a5;
+    }
+
+    .badge-status--cancelled {
+        background: rgba(107, 114, 128, 0.15);
+        border: 1px solid rgba(107, 114, 128, 0.4);
+        color: #9ca3af;
+    }
+
+    /* Action buttons */
+    .btn-act {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.4rem 0.85rem;
+        font-size: 0.78rem;
+        font-weight: 700;
+        border-radius: 99px;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .btn-act--accept {
+        background: #ffffff;
+        color: #000000;
+        border: 1px solid #ffffff;
+    }
+
+    .btn-act--accept:hover {
+        background: #e5e5e5;
+        transform: translateY(-1px);
+    }
+
+    .btn-act--reject {
+        background: rgba(239, 68, 68, 0.15);
+        color: #fca5a5;
+        border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+
+    .btn-act--reject:hover {
+        background: rgba(239, 68, 68, 0.3);
+        color: #ffffff;
+        transform: translateY(-1px);
+    }
+
+    @media (max-width: 960px) {
+        .stats-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .requests-table {
+            display: block;
+            overflow-x: auto;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="dash-container">
+
+    <!-- Header -->
+    <div class="dash-header">
+        <div>
+            <h1 class="dash-title">
+                <i class="fa-solid fa-chart-line"></i> Owner Dashboard
+            </h1>
+            <p style="font-size:0.88rem; color:var(--text-muted); margin-top:0.35rem;">
+                Overview of your properties and incoming rental requests.
+            </p>
+        </div>
+        <a href="{% url 'property_create' %}" class="btn-action-main">
+            <i class="fa-solid fa-plus"></i> Add New Property
+        </a>
+    </div>
+
+    <!-- 5 Stats Cards -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <i class="fa-solid fa-building stat-card-icon"></i>
+            <span class="stat-card-val">{{ total_properties }}</span>
+            <span class="stat-card-lbl">Total Properties</span>
+        </div>
+
+        <div class="stat-card">
+            <i class="fa-solid fa-house-circle-check stat-card-icon"></i>
+            <span class="stat-card-val">{{ available_properties }}</span>
+            <span class="stat-card-lbl">Available</span>
+        </div>
+
+        <div class="stat-card">
+            <i class="fa-solid fa-paper-plane stat-card-icon"></i>
+            <span class="stat-card-val">{{ total_requests }}</span>
+            <span class="stat-card-lbl">Total Requests</span>
+        </div>
+
+        <div class="stat-card">
+            <i class="fa-solid fa-clock stat-card-icon" style="color:#fbbf24;"></i>
+            <span class="stat-card-val" style="color:#fbbf24;">{{ pending_requests }}</span>
+            <span class="stat-card-lbl">Pending</span>
+        </div>
+
+        <div class="stat-card">
+            <i class="fa-solid fa-circle-check stat-card-icon" style="color:#6ee7b7;"></i>
+            <span class="stat-card-val" style="color:#6ee7b7;">{{ accepted_requests }}</span>
+            <span class="stat-card-lbl">Accepted</span>
+        </div>
+    </div>
+
+    <!-- Rental Requests Management Panel -->
+    <div class="panel-card">
+        <div class="panel-head">
+            <h3 class="panel-title">
+                <i class="fa-solid fa-inbox"></i> Rental Requests Received
+            </h3>
+            <span style="font-size:0.82rem; color:var(--text-muted); font-weight:600;">
+                {{ total_requests }} Total
+            </span>
+        </div>
+
+        {% if rental_requests %}
+            <table class="requests-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Tenant</th>
+                        <th>Message</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in rental_requests %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'property_detail' req.property.id %}" style="color:#ffffff; font-weight:700; text-decoration:none;">
+                                {{ req.property.title }}
+                            </a>
+                            <div style="font-size:0.78rem; color:var(--text-muted);">
+                                €{{ req.property.monthly_rent|floatformat:"0g" }}/mo
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-weight:600;">{{ req.tenant.first_name|default:req.tenant.email }}</div>
+                            <div style="font-size:0.78rem; color:var(--text-muted);">{{ req.tenant.email }}</div>
+                        </td>
+                        <td style="max-width:240px; font-size:0.85rem; color:#d4d4d4;">
+                            {{ req.message|default:"No message attached."|truncatechars:80 }}
+                        </td>
+                        <td style="font-size:0.82rem; color:var(--text-muted); white-space:nowrap;">
+                            {{ req.created_at|date:"M d, Y" }}
+                        </td>
+                        <td>
+                            {% if req.status == 'PENDING' %}
+                                <span class="badge-status badge-status--pending"><i class="fa-solid fa-clock"></i> Pending</span>
+                            {% elif req.status == 'ACCEPTED' %}
+                                <span class="badge-status badge-status--accepted"><i class="fa-solid fa-check"></i> Accepted</span>
+                            {% elif req.status == 'REJECTED' %}
+                                <span class="badge-status badge-status--rejected"><i class="fa-solid fa-xmark"></i> Rejected</span>
+                            {% else %}
+                                <span class="badge-status badge-status--cancelled"><i class="fa-solid fa-ban"></i> Cancelled</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if req.status == 'PENDING' %}
+                                <div style="display:flex; gap:0.4rem;">
+                                    <a href="{% url 'update_request_status' req.id 'accept' %}" class="btn-act btn-act--accept">
+                                        <i class="fa-solid fa-check"></i> Accept
+                                    </a>
+                                    <a href="{% url 'update_request_status' req.id 'reject' %}" class="btn-act btn-act--reject">
+                                        <i class="fa-solid fa-xmark"></i> Reject
+                                    </a>
+                                </div>
+                            {% else %}
+                                <span style="font-size:0.8rem; color:var(--text-muted); font-style:italic;">No action required</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div style="padding: 2.5rem; text-align: center; color: var(--text-muted); background: rgba(18,18,18,0.6); border-radius: 16px;">
+                <i class="fa-solid fa-envelope-open" style="font-size: 2.5rem; color: #ffffff; opacity: 0.5; margin-bottom: 0.75rem; display: block;"></i>
+                No rental requests have been received for your properties yet.
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- My Properties Management Panel -->
+    <div class="panel-card">
+        <div class="panel-head">
+            <h3 class="panel-title">
+                <i class="fa-solid fa-building-user"></i> Manage My Properties
+            </h3>
+            <a href="{% url 'property_create' %}" class="btn-act btn-act--accept">
+                <i class="fa-solid fa-plus"></i> Add Property
+            </a>
+        </div>
+
+        {% if owner_properties %}
+            <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem;">
+                {% for p in owner_properties %}
+                <div style="background: rgba(18,18,18,0.85); border: 1px solid var(--border-color); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column;">
+                    {% if p.images.first %}
+                        <img src="{{ p.images.first.image.url }}" alt="{{ p.title }}" style="width:100%; aspect-ratio:16/9; object-fit:cover;">
+                    {% else %}
+                        <div style="width:100%; aspect-ratio:16/9; background:rgba(255,255,255,0.05); display:flex; align-items:center; justify-content:center; color:#ffffff; font-size:2rem;">
+                            <i class="fa-solid fa-building"></i>
+                        </div>
+                    {% endif %}
+                    <div style="padding: 1.1rem; display:flex; flex-direction:column; gap:0.4rem; flex:1;">
+                        <h4 style="font-family:'Outfit',sans-serif; font-size:1rem; font-weight:700; color:var(--text-main);">{{ p.title }}</h4>
+                        <p style="font-size:0.8rem; color:var(--text-muted);"><i class="fa-solid fa-location-dot"></i> {{ p.location }}</p>
+                        <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#ffffff; margin-top:auto; padding-top:0.5rem;">
+                            €{{ p.monthly_rent|floatformat:"0g" }} / mo
+                        </div>
+                    </div>
+                    <div style="padding: 0 1.1rem 1.1rem; display:flex; gap:0.5rem;">
+                        <a href="{% url 'property_detail' p.id %}" class="btn-act btn-act--accept" style="flex:1; justify-content:center;">
+                            <i class="fa-solid fa-eye"></i> View
+                        </a>
+                        <a href="{% url 'property_update' p.id %}" class="btn-act btn-act--accept" style="flex:1; justify-content:center; background:rgba(255,255,255,0.1); color:#ffffff; border-color:rgba(255,255,255,0.25);">
+                            <i class="fa-solid fa-pen-to-square"></i> Edit
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div style="padding: 2.5rem; text-align: center; color: var(--text-muted); background: rgba(18,18,18,0.6); border-radius: 16px;">
+                You haven't added any properties yet. Click "Add New Property" above to create your first listing.
+            </div>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock content %}

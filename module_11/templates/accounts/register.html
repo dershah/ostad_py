@@ -23,7 +23,7 @@
         animation: contactRise 0.45s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    /* soft indigo glow inside the card */
+    /* white glow top-right */
     #section-contact::before {
         content: "";
         position: absolute;
@@ -31,11 +31,11 @@
         right: -120px;
         width: 300px;
         height: 300px;
-        background: radial-gradient(circle, rgba(99, 102, 241, 0.32), transparent 70%);
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent 70%);
         pointer-events: none;
     }
 
-    /* pink glow bottom-left */
+    /* white glow bottom-left */
     #section-contact::after {
         content: "";
         position: absolute;
@@ -43,7 +43,7 @@
         left: -130px;
         width: 280px;
         height: 280px;
-        background: radial-gradient(circle, rgba(236, 72, 153, 0.2), transparent 70%);
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.12), transparent 70%);
         pointer-events: none;
     }
 
@@ -80,9 +80,9 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        color: #fff;
-        background: linear-gradient(135deg, var(--primary), var(--accent));
-        box-shadow: 0 10px 26px rgba(99, 102, 241, 0.38);
+        color: #000000;
+        background: #ffffff;
+        box-shadow: 0 10px 26px rgba(255, 255, 255, 0.3);
     }
 
     /* ---------- Form ---------- */
@@ -121,7 +121,7 @@
         font-family: inherit;
         font-size: 0.92rem;
         color: var(--text-main);
-        background: rgba(15, 23, 42, 0.65);
+        background: rgba(18, 18, 18, 0.9);
         border: 1px solid var(--border-color);
         border-radius: 14px;
         outline: none;
@@ -130,20 +130,20 @@
 
     #section-contact input::placeholder,
     #section-contact textarea::placeholder {
-        color: #64748b;
+        color: #666666;
     }
 
     #section-contact input:hover,
     #section-contact textarea:hover {
-        border-color: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.3);
     }
 
     #section-contact input:focus,
     #section-contact textarea:focus,
     #section-contact select:focus {
-        border-color: var(--primary);
-        background: rgba(15, 23, 42, 0.9);
-        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        border-color: #ffffff;
+        background: rgba(0, 0, 0, 0.95);
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
     }
 
     #section-contact textarea {
@@ -170,15 +170,15 @@
         gap: 0.55rem;
         font-family: 'Outfit', sans-serif;
         font-size: 0.95rem;
-        font-weight: 700;
+        font-weight: 800;
         letter-spacing: 0.3px;
         text-transform: uppercase;
-        color: #fff;
-        background: linear-gradient(135deg, var(--primary), var(--accent));
+        color: #000000;
+        background: #ffffff;
         border: none;
         border-radius: 14px;
         cursor: pointer;
-        box-shadow: 0 10px 24px rgba(99, 102, 241, 0.3);
+        box-shadow: 0 10px 24px rgba(255, 255, 255, 0.25);
         transition: transform 0.2s ease, box-shadow 0.25s ease, filter 0.25s ease;
     }
 
@@ -191,13 +191,13 @@
 
     #submit_btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 14px 32px rgba(236, 72, 153, 0.35);
-        filter: brightness(1.06);
+        box-shadow: 0 14px 32px rgba(255, 255, 255, 0.4);
+        background: #f0f0f0;
     }
 
     #submit_btn:active {
         transform: translateY(0);
-        box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3);
+        box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);
     }
 
     /* ---------- Help text + errors ---------- */
@@ -254,9 +254,9 @@
         font-size: 0.9rem;
         font-weight: 500;
         border-radius: 12px;
-        background: rgba(99, 102, 241, 0.15);
-        border: 1px solid rgba(99, 102, 241, 0.35);
-        color: #a5b4fc;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: #ffffff;
         animation: contactRise 0.35s ease-out;
     }
 
