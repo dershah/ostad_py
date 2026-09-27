@@ -1,0 +1,566 @@
+{% extends 'base.html' %}
+
+{% block title %}My Profile | Saj-Sojja{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ============================================================
+       PROFILE PAGE STYLES
+       ============================================================ */
+
+    /* ---------- Welcome banner ---------- */
+    .welcome-banner {
+        max-width: 1100px;
+        margin: 0 auto 1.5rem;
+        padding: 1.1rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.7rem;
+        text-align: center;
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        letter-spacing: -0.2px;
+        color: var(--text-main);
+        background: var(--glass-bg);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid var(--glass-border);
+        border-radius: 18px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        position: relative;
+        overflow: hidden;
+        animation: profileRise 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .welcome-banner::before {
+        content: "\f2b5"; /* hand-wave */
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        font-size: 1.05rem;
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+    }
+
+    /* ---------- Profile layout ---------- */
+    #section-profile {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 320px 1fr;
+        gap: 1.5rem;
+        align-items: start;
+        animation: profileRise 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes profileRise {
+        from { opacity: 0; transform: translateY(18px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---------- Left: identity card ---------- */
+    .profile-card {
+        position: relative;
+        padding: 2rem 1.5rem;
+        background: var(--glass-bg);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .profile-card::before {
+        content: "";
+        position: absolute;
+        top: -120px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 240px;
+        height: 240px;
+        background: radial-gradient(circle, rgba(99, 102, 241, 0.3), transparent 70%);
+        pointer-events: none;
+    }
+
+    .profile-avatar {
+        position: relative;
+        z-index: 1;
+        width: 104px;
+        height: 104px;
+        margin: 0 auto 1.1rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Outfit', sans-serif;
+        font-size: 2.4rem;
+        font-weight: 800;
+        color: #fff;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        border: 3px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 12px 30px rgba(99, 102, 241, 0.4);
+        overflow: hidden;
+    }
+
+    .profile-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .profile-name {
+        position: relative;
+        z-index: 1;
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--text-main);
+        letter-spacing: -0.3px;
+    }
+
+    .profile-email {
+        position: relative;
+        z-index: 1;
+        margin-top: 0.25rem;
+        font-size: 0.84rem;
+        color: var(--text-muted);
+        word-break: break-word;
+    }
+
+    /* role pill */
+    .profile-role {
+        position: relative;
+        z-index: 1;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        margin-top: 1rem;
+        padding: 0.4rem 1rem;
+        font-size: 0.74rem;
+        font-weight: 700;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        border-radius: 99px;
+        background: rgba(99, 102, 241, 0.15);
+        border: 1px solid rgba(99, 102, 241, 0.35);
+        color: #a5b4fc;
+    }
+
+    .profile-role--owner {
+        background: rgba(236, 72, 153, 0.14);
+        border-color: rgba(236, 72, 153, 0.35);
+        color: #f9a8d4;
+    }
+
+    .profile-role--tenant {
+        background: rgba(16, 185, 129, 0.14);
+        border-color: rgba(16, 185, 129, 0.35);
+        color: #6ee7b7;
+    }
+
+    /* quick stats */
+    .profile-stats {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+    }
+
+    .stat-box {
+        padding: 0.85rem 0.5rem;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border-color);
+    }
+
+    .stat-value {
+        display: block;
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: var(--text-main);
+    }
+
+    .stat-label {
+        display: block;
+        margin-top: 0.15rem;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text-muted);
+    }
+
+    /* ---------- Right: details card ---------- */
+    .profile-details {
+        padding: 1.75rem 1.75rem 2rem;
+        background: var(--glass-bg);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    }
+
+    .profile-section-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        padding-bottom: 1.1rem;
+        margin-bottom: 1.4rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .profile-section-title {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--text-main);
+        margin: 0;
+    }
+
+    .profile-section-title i {
+        color: var(--primary);
+        font-size: 0.95rem;
+    }
+
+    .profile-edit-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--text-main);
+        text-decoration: none;
+        border-radius: 99px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-color);
+        transition: all 0.2s ease;
+    }
+
+    .profile-edit-link:hover {
+        background: rgba(99, 102, 241, 0.15);
+        border-color: var(--primary);
+        color: var(--primary);
+        transform: translateY(-2px);
+    }
+
+    /* info grid */
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .info-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        padding: 0.95rem 1.1rem;
+        border-radius: 14px;
+        background: rgba(15, 23, 42, 0.5);
+        border: 1px solid var(--border-color);
+        transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .info-item:hover {
+        border-color: rgba(99, 102, 241, 0.4);
+        background: rgba(99, 102, 241, 0.07);
+    }
+
+    .info-item--full {
+        grid-column: 1 / -1;
+    }
+
+    .info-label {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: var(--text-muted);
+    }
+
+    .info-label i {
+        color: var(--primary);
+        font-size: 0.75rem;
+    }
+
+    .info-value {
+        font-size: 0.93rem;
+        font-weight: 500;
+        color: var(--text-main);
+        line-height: 1.5;
+        word-break: break-word;
+    }
+
+    .info-value--muted {
+        color: var(--text-muted);
+        font-style: italic;
+    }
+
+    /* action buttons row */
+    .profile-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 1.75rem;
+        padding-top: 1.4rem;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .profile-btn {
+        flex: 1 1 180px;
+        padding: 0.85rem 1.25rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.55rem;
+        font-family: 'Outfit', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        color: #fff;
+        text-decoration: none;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        border: none;
+        border-radius: 14px;
+        cursor: pointer;
+        box-shadow: 0 10px 24px rgba(99, 102, 241, 0.3);
+        transition: transform 0.2s ease, box-shadow 0.25s ease, filter 0.25s ease;
+    }
+
+    .profile-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 32px rgba(236, 72, 153, 0.35);
+        filter: brightness(1.06);
+    }
+
+    .profile-btn--ghost {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-color);
+        color: var(--text-main);
+        box-shadow: none;
+    }
+
+    .profile-btn--ghost:hover {
+        background: rgba(99, 102, 241, 0.15);
+        border-color: var(--primary);
+        color: var(--primary);
+        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.2);
+    }
+
+    .profile-btn--danger {
+        background: linear-gradient(135deg, #ef4444, #b91c1c);
+        box-shadow: 0 10px 24px rgba(239, 68, 68, 0.28);
+    }
+
+    .profile-btn--danger:hover {
+        box-shadow: 0 14px 30px rgba(239, 68, 68, 0.4);
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 900px) {
+        #section-profile {
+            grid-template-columns: 1fr;
+        }
+
+        .profile-card {
+            padding: 1.75rem 1.25rem;
+        }
+    }
+
+    @media (max-width: 560px) {
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .welcome-banner {
+            font-size: 0.95rem;
+            padding: 0.9rem 1.1rem;
+        }
+
+        .profile-btn {
+            flex: 1 1 100%;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Welcome banner -->
+<div class="welcome-banner">
+    Welcome back, {{ user.first_name|default:user.email }}
+</div>
+
+{% if profile %}
+<section id="section-profile">
+
+    <!-- ================= LEFT: IDENTITY CARD ================= -->
+    <aside class="profile-card">
+
+        <!-- Avatar -->
+        <div class="profile-avatar">
+            {% if profile.avatar %}
+                <img src="{{ profile.avatar.url }}" alt="{{ profile.first_name }} avatar">
+            {% else %}
+                {{ profile.first_name|slice:":1"|upper }}{{ profile.last_name|slice:":1"|upper }}
+            {% endif %}
+        </div>
+
+        <!-- Name + Email -->
+        <h2 class="profile-name">
+            {% if profile.first_name or profile.last_name %}
+                {{ profile.first_name }} {{ profile.last_name }}
+            {% else %}
+                {{ profile.email|slice:":1"|upper }}
+            {% endif %}
+        </h2>
+        <p class="profile-email">{{ profile.email }}</p>
+
+        <!-- Role badge -->
+        {% if profile.role == 'OWNER' %}
+            <span class="profile-role profile-role--owner">
+                <i class="fa-solid fa-house-chimney-user"></i> Owner
+            </span>
+        {% else %}
+            <span class="profile-role profile-role--tenant">
+                <i class="fa-solid fa-user-check"></i> Tenant
+            </span>
+        {% endif %}
+
+        <!-- Quick stats -->
+        <div class="profile-stats">
+            <div class="stat-box">
+                <span class="stat-value">#{{ profile.id }}</span>
+                <span class="stat-label">Profile ID</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-value">
+                    {% if profile.phone %}
+                        <i class="fa-solid fa-circle-check" style="color:#6ee7b7;font-size:.9rem;"></i>
+                    {% else %}
+                        &mdash;
+                    {% endif %}
+                </span>
+                <span class="stat-label">Phone</span>
+            </div>
+        </div>
+
+    </aside>
+
+    <!-- ================= RIGHT: DETAILS CARD ================= -->
+    <div class="profile-details">
+
+        <div class="profile-section-head">
+            <h3 class="profile-section-title">
+                <i class="fa-solid fa-id-card"></i> Account Information
+            </h3>
+            <a href="#" class="profile-edit-link">
+                <i class="fa-solid fa-pen"></i> Edit Profile
+            </a>
+        </div>
+
+        <div class="info-grid">
+
+            <div class="info-item">
+                <span class="info-label">
+                    <i class="fa-solid fa-user"></i> First Name
+                </span>
+                <span class="info-value {% if not profile.first_name %}info-value--muted{% endif %}">
+                    {{ profile.first_name|default:"Not set" }}
+                </span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">
+                    <i class="fa-solid fa-user"></i> Last Name
+                </span>
+                <span class="info-value {% if not profile.last_name %}info-value--muted{% endif %}">
+                    {{ profile.last_name|default:"Not set" }}
+                </span>
+            </div>
+
+            <div class="info-item info-item--full">
+                <span class="info-label">
+                    <i class="fa-solid fa-envelope"></i> Email Address
+                </span>
+                <span class="info-value">{{ profile.email }}</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">
+                    <i class="fa-solid fa-phone"></i> Phone
+                </span>
+                <span class="info-value {% if not profile.phone %}info-value--muted{% endif %}">
+                    {{ profile.phone|default:"Not set" }}
+                </span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">
+                    <i class="fa-solid fa-shield-halved"></i> Account Type
+                </span>
+                <span class="info-value">{{ profile.get_role_display }}</span>
+            </div>
+
+            <div class="info-item info-item--full">
+                <span class="info-label">
+                    <i class="fa-solid fa-location-dot"></i> Address
+                </span>
+                <span class="info-value {% if not profile.address %}info-value--muted{% endif %}">
+                    {{ profile.address|default:"No address provided" }}
+                </span>
+            </div>
+
+        </div>
+
+        <!-- Action row -->
+        <div class="profile-actions">
+            <a href="#" class="profile-btn">
+                <i class="fa-solid fa-pen-to-square"></i> Edit Profile
+            </a>
+            <a href="#" class="profile-btn profile-btn--ghost">
+                <i class="fa-solid fa-box-archive"></i> My Orders
+            </a>
+            <a href="#" class="profile-btn profile-btn--danger">
+                <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+{% else %}
+    <!-- Fallback if profile object isn't passed -->
+    <div class="welcome-banner" style="max-width:560px; flex-direction:column; padding:2rem 1.5rem;">
+        <div style="font-size:1.2rem;">Profile not found</div>
+        <p style="font-size:0.85rem; font-weight:400; color:var(--text-muted); margin-top:0.5rem;">
+            We couldn't load your profile details. Please try logging in again.
+        </p>
+    </div>
+{% endif %}
+
+{% endblock content %}
