@@ -97,3 +97,11 @@ class ProductView(APIView):
                 data=serializer.errors,
                 status=status.HTTP_400_BAD_REQUEST
             )
+    def delete(self, request, pk):
+        product = Product.objects.get(id=pk)
+        product.delete()
+
+        return Response(
+            data={'message': 'Product deleted successfully'},
+            status=status.HTTP_204_NO_CONTENT
+        )
