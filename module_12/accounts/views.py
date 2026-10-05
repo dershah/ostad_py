@@ -14,7 +14,7 @@ os.environ['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 class RegisterView(APIView):
     def post(self, request):
-        serializer = CustomUserSerializer(data = request.data)
+        serializer = CustomUserSerializer(data = request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(
@@ -51,3 +51,42 @@ class LoginView(APIView):
         }
 
         return response
+    
+
+class UserListView(APIView):
+    def get(self, request):
+        users = CustomUser.objects.all()
+        serializer = CustomUserSerializer(users, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+class UserDetailView(APIView):
+    def get(self, request, pk):
+        user = CustomUser.objects.get(id=pk)
+        serializer = CustomUserSerializer(user)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, pk):
+        user =CustomUser.objects.get(id=pk)
+        serializer = CustomUserSerializer(user, data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data=serializer.data, status=status.HTTP_204_NO_CONTENT)
+        return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def patch(self, request, pk):
+        user = CustomUser.objects.get(id=pk)
+        serializer = CustomUserSerializer(user, data=request.data, partial=True, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data=serializer.data, status=status.HTTP_204_NO_CONTENT)
+        return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, pk):
+        user = CustomUser.objects.get(id=pk)
+        user.delete()
+        return Response(
+            data={'message': 'User deleted successfully'},
+            status=status.HTTP_204_NO_CONTENT
+        )
+  

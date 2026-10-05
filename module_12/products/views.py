@@ -10,35 +10,17 @@ class ProductListView(APIView):
 
     def get(self, request):
         products = Product.objects.all()
-
-        serializer = ProductListSerializer(
-            products, 
-            many=True
-        )
-
+        serializer = ProductListSerializer(products, many=True)
         data = serializer.data
-
-        return Response(
-            data=data,
-            status=status.HTTP_200_OK
-        )
+        return Response(data=data,status=status.HTTP_200_OK)
 
     def post(self, request):
-        serializer = ProductListSerializer(
-            data=request.data
-        )
-
+        serializer = ProductListSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(
-                data=serializer.data,
-                status=status.HTTP_201_CREATED
-            )
-        else:
-            return Response(
-                data=serializer.errors,
-                status=status.HTTP_400_BAD_REQUEST
-            )
+            return Response(data=serializer.data,status=status.HTTP_201_CREATED)
+        
+        return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ProductView(APIView):
@@ -47,56 +29,32 @@ class ProductView(APIView):
     def get(self, request, pk):
         product = Product.objects.get(id=pk)
 
-        serializer = ProductDetailSerializer(
-            product
-        )
+        serializer = ProductDetailSerializer(product)
         data = serializer.data
 
-        return Response(
-            data=data,
-            status=status.HTTP_200_OK
-        )
+        return Response(data=data,status=status.HTTP_200_OK)
 
     def put(self, request, pk):
         product = Product.objects.get(id=pk)
 
-        serializer = ProductDetailSerializer(
-            product,
-            data=request.data
-        )
+        serializer = ProductDetailSerializer(product,data=request.data)
 
         if serializer.is_valid():
             serializer.save()
-            return Response(
-                data=serializer.data,
-                status=status.HTTP_204_NO_CONTENT
-            )
+            return Response(data=serializer.data,status=status.HTTP_204_NO_CONTENT)
        
-        return Response(
-            data=serializer.errors,
-            status=status.HTTP_400_BAD_REQUEST
-        )
+        return Response(data=serializer.errors,status=status.HTTP_400_BAD_REQUEST)
         
     def patch(self, request, pk):
         product = Product.objects.get(id=pk)
-
-        serializer = ProductDetailSerializer(
-            product,
-            data=request.data,
-            partial=True
-        )
+        serializer = ProductDetailSerializer(product,data=request.data,partial=True)
 
         if serializer.is_valid():
             serializer.save()
-            return Response(
-                data=serializer.data,
-                status=status.HTTP_204_NO_CONTENT
-            )
-        else:
-            return Response(
-                data=serializer.errors,
-                status=status.HTTP_400_BAD_REQUEST
-            )
+            return Response(data=serializer.data,status=status.HTTP_204_NO_CONTENT)
+
+        return Response(data=serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    
     def delete(self, request, pk):
         product = Product.objects.get(id=pk)
         product.delete()

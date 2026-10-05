@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from products.views import ProductListView, ProductView
-from accounts.views import RegisterView, LoginView
+from accounts.views import RegisterView, LoginView,UserListView, UserDetailView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -27,10 +27,12 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api-auth/", include("rest_framework.urls")),
-    path("products", ProductListView.as_view(), name="product-list"),
-    path("product/<int:pk>", ProductView.as_view(), name="product-detail"),
+    path("products/", ProductListView.as_view(), name="product-list"),
+    path("product/<int:pk>/", ProductView.as_view(), name="product-detail"),
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),
+    path('users/', UserListView.as_view(), name='user-list'),
+    path('user/<int:pk>/', UserDetailView.as_view(), name='user-detail'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
